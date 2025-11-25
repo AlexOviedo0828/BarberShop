@@ -1,0 +1,37 @@
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# Flask instance folder (configuración local, no se sube)
+instance/
+
+
+# Logs
+*.log
+
+# Local config files
+settings.py
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+
+# ===========================
+#  EDITOR / IDE
+# ===========================
+
+# VS Code
+.vscode/
+.history/
+
+
+
+# Ignorar imágenes pesadas específicas
+static/img/baner.png
+static/img/baner_registro.png
