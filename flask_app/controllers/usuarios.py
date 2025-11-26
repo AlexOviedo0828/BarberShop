@@ -108,7 +108,7 @@ def registro_procesar():
 
     Usuario.crear(data)
 
-    flash("Registro exitoso. Inicia sesión.", "success")
+    flash("Registro exitoso", "success")
     return redirect('/login')
 
 
