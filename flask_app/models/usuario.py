@@ -17,9 +17,8 @@ class Usuario:
         self.created_at = data.get("created_at", None)
         self.updated_at = data.get("updated_at", None)
 
-    # =====================================
     # OBTENER POR EMAIL
-    # =====================================
+
     @classmethod
     def obtener_por_email(cls, data):
         query = "SELECT * FROM usuarios WHERE email = %(email)s LIMIT 1;"
@@ -30,9 +29,6 @@ class Usuario:
 
         return cls(result[0])
 
-    # =====================================
-    # OBTENER POR ID
-    # =====================================
     @classmethod
     def obtener_por_id(cls, data):
         query = "SELECT * FROM usuarios WHERE id = %(id)s LIMIT 1;"
@@ -43,18 +39,16 @@ class Usuario:
 
         return cls(result[0])
 
-    # =====================================
     # OBTENER TODOS
-    # =====================================
+
     @classmethod
     def obtener_todos(cls):
         query = "SELECT * FROM usuarios;"
         results = connectToMySQL(cls.db).query_db(query)
         return [cls(row) for row in results]
 
-    # =====================================
     # CREAR
-    # =====================================
+
     @classmethod
     def crear(cls, data):
         query = """
@@ -63,9 +57,8 @@ class Usuario:
         """
         return connectToMySQL(cls.db).query_db(query, data)
 
-    # =====================================
     # ACTUALIZAR
-    # =====================================
+
     @classmethod
     def actualizar(cls, data):
         query = """
@@ -76,9 +69,8 @@ class Usuario:
         """
         return connectToMySQL(cls.db).query_db(query, data)
 
-    # =====================================
     # ELIMINAR
-    # =====================================
+
     @classmethod
     def eliminar(cls, data):
         query = "DELETE FROM usuarios WHERE id = %(id)s;"

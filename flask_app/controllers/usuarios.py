@@ -1,5 +1,3 @@
-# controllers/usuarios.py
-
 from flask import render_template, redirect, request, session, flash
 from flask_app import app
 from flask_bcrypt import Bcrypt
@@ -11,16 +9,13 @@ from flask_app.models.pedido import Pedido
 bcrypt = Bcrypt(app)
 
 
-# =====================================================
 # MIDDLEWARE: SOLO ADMIN
-# =====================================================
 def is_admin():
     return "usuario_id" in session and session.get("rol") == "admin"
 
 
-# =====================================================
 # LOGIN
-# =====================================================
+
 
 @app.route('/')
 @app.route('/login')
@@ -39,7 +34,6 @@ def login_procesar():
         flash("Todos los campos son obligatorios", "error")
         return redirect('/login')
 
-    # CORREGIDO: tu función necesita un diccionario
     usuario = Usuario.obtener_por_email({"email": email})
 
     if not usuario:
@@ -50,19 +44,16 @@ def login_procesar():
         flash("Contraseña incorrecta", "error")
         return redirect('/login')
 
-    # Guardar sesión
     session['usuario_id'] = usuario.id
     session['nombre'] = usuario.nombre
     session['rol'] = usuario.rol
 
-    # Redirección según rol
     if usuario.rol == "admin":
         return redirect('/dashboard/admin')
 
     return redirect('/dashboard/usuario')
-# =====================================================
+
 # REGISTRO
-# =====================================================
 
 
 @app.route('/registro')
@@ -121,9 +112,8 @@ def registro_procesar():
     return redirect('/login')
 
 
-# =====================================================
 # DASHBOARD USUARIO
-# =====================================================
+
 
 @app.route("/dashboard/usuario")
 def dashboard_usuario():
@@ -145,9 +135,8 @@ def dashboard_usuario():
     return render_template("usuario.html", **data)
 
 
-# =====================================================
 # CRUD ADMIN DE USUARIOS
-# =====================================================
+
 
 @app.route('/admin/usuarios')
 def admin_lista_usuarios():
@@ -241,9 +230,8 @@ def admin_eliminar_usuario(id):
     return redirect('/admin/usuarios')
 
 
-# =====================================================
 # LOGOUT
-# =====================================================
+
 
 @app.route('/logout')
 def logout():
