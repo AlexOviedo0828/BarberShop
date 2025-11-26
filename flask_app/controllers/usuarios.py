@@ -1,11 +1,26 @@
+# controllers/usuarios.py
+
 from flask import render_template, redirect, request, session, flash
 from flask_app import app
-from flask_app.models.usuario import Usuario
 from flask_bcrypt import Bcrypt
+
+from flask_app.models.usuario import Usuario
+from flask_app.models.cita import Cita
+from flask_app.models.pedido import Pedido
+
 bcrypt = Bcrypt(app)
 
-# login
 
+# =====================================================
+# MIDDLEWARE: SOLO ADMIN
+# =====================================================
+def is_admin():
+    return "usuario_id" in session and session.get("rol") == "admin"
+
+
+# =====================================================
+# LOGIN
+# =====================================================
 
 @app.route('/')
 @app.route('/login')
@@ -15,23 +30,22 @@ def login_form():
 
 @app.route('/login/procesar', methods=['POST'])
 def login_procesar():
+
     email = request.form['email']
     password = request.form['password']
 
-    # Validar
+    # Validaciones
     if len(email) == 0 or len(password) == 0:
         flash("Todos los campos son obligatorios", "error")
         return redirect('/login')
 
-    # Buscar usuario
-    data = {"email": email}
-    usuario = Usuario.obtener_por_email(data)
+    # CORREGIDO: tu función necesita un diccionario
+    usuario = Usuario.obtener_por_email({"email": email})
 
     if not usuario:
         flash("El usuario no existe", "error")
         return redirect('/login')
 
-    # Validar contraseña
     if not bcrypt.check_password_hash(usuario.password, password):
         flash("Contraseña incorrecta", "error")
         return redirect('/login')
@@ -41,14 +55,15 @@ def login_procesar():
     session['nombre'] = usuario.nombre
     session['rol'] = usuario.rol
 
-    # Redirección según rol que se logea  el admin es alex@barber.cl y el password es 123456789
+    # Redirección según rol
     if usuario.rol == "admin":
         return redirect('/dashboard/admin')
 
     return redirect('/dashboard/usuario')
+# =====================================================
+# REGISTRO
+# =====================================================
 
-
-# Registro
 
 @app.route('/registro')
 def registro_form():
@@ -58,24 +73,23 @@ def registro_form():
 @app.route('/registro/procesar', methods=['POST'])
 def registro_procesar():
 
-    nombre = request.form['nombre']
-    apellido = request.form['apellido']
-    email = request.form['email']
-    telefono = request.form['telefono']
-    password = request.form['password']
-    password2 = request.form['password2']
+    nombre = request.form.get("nombre", "")
+    apellido = request.form.get("apellido", "")
+    email = request.form.get("email", "")
+    telefono = request.form.get("telefono", "")
+    password = request.form.get("password", "")
+    password2 = request.form.get("password2", "")
 
-    # Validaciones
     if len(nombre) < 2:
-        flash("El nombre debe tener mínimo 2 caracteres", "error")
+        flash("El nombre es muy corto", "error")
         return redirect('/registro')
 
     if len(apellido) < 2:
-        flash("El apellido debe tener mínimo 2 caracteres", "error")
+        flash("El apellido es muy corto", "error")
         return redirect('/registro')
 
     if len(email) < 5:
-        flash("El correo no es válido", "error")
+        flash("Correo inválido", "error")
         return redirect('/registro')
 
     if password != password2:
@@ -83,47 +97,153 @@ def registro_procesar():
         return redirect('/registro')
 
     if len(password) < 6:
-        flash("La contraseña debe tener al menos 6 caracteres", "error")
+        flash("La contraseña debe tener mínimo 6 caracteres", "error")
         return redirect('/registro')
 
-    # Verificar correo ya registrado
-    existente = Usuario.obtener_por_email({"email": email})
-    if existente:
+    if Usuario.obtener_por_email({"email": email}):
         flash("Este correo ya está registrado", "error")
         return redirect('/registro')
 
-    # Crear usuario
     pw_hash = bcrypt.generate_password_hash(password)
 
     data = {
         "nombre": nombre,
         "apellido": apellido,
         "email": email,
-        "password": pw_hash,
         "telefono": telefono,
+        "password": pw_hash,
         "rol": "usuario"
     }
 
     Usuario.crear(data)
 
-    flash("Registro exitoso, ahora puedes iniciar sesión", "success")
+    flash("Registro exitoso. Inicia sesión.", "success")
     return redirect('/login')
 
 
-# usuario
+# =====================================================
+# DASHBOARD USUARIO
+# =====================================================
 
-@app.route('/dashboard/usuario')
+@app.route("/dashboard/usuario")
 def dashboard_usuario():
-    if 'usuario_id' not in session:
+
+    if "usuario_id" not in session:
+        return redirect("/login")
+
+    usuario = Usuario.obtener_por_id({"id": session["usuario_id"]})
+
+    data = {
+        "usuario": usuario,
+        "citas_pendientes": Cita.pendientes_usuario({"usuario_id": usuario.id}),
+        "proxima_cita": Cita.proxima({"usuario_id": usuario.id}),
+        "pedidos_en_curso": Pedido.en_curso({"usuario_id": usuario.id}),
+        "ultimas_citas": Cita.ultimas_usuario({"usuario_id": usuario.id}),
+        "ultimos_pedidos": Pedido.ultimos({"usuario_id": usuario.id})
+    }
+
+    return render_template("usuario.html", **data)
+
+
+# =====================================================
+# CRUD ADMIN DE USUARIOS
+# =====================================================
+
+@app.route('/admin/usuarios')
+def admin_lista_usuarios():
+
+    if not is_admin():
+        flash("No tienes permisos para acceder", "error")
         return redirect('/login')
 
-    if session.get('rol') != 'usuario':
-        return redirect('/dashboard/admin')
+    usuarios = Usuario.obtener_todos()
 
-    return render_template('usuario.html')
+    return render_template("admin_usuarios.html", usuarios=usuarios)
 
-# cerrar session
 
+@app.route('/admin/usuarios/nuevo')
+def admin_nuevo_usuario():
+
+    if not is_admin():
+        return redirect('/login')
+
+    return render_template("admin_usuario_nuevo.html")
+
+
+@app.route('/admin/usuarios/crear', methods=['POST'])
+def admin_crear_usuario():
+
+    if not is_admin():
+        return redirect('/login')
+
+    pw_hash = bcrypt.generate_password_hash(request.form["password"])
+
+    data = {
+        "nombre": request.form["nombre"],
+        "apellido": request.form["apellido"],
+        "email": request.form["email"],
+        "telefono": request.form["telefono"],
+        "password": pw_hash,
+        "rol": request.form["rol"]
+    }
+
+    Usuario.crear(data)
+
+    flash("Usuario creado correctamente", "success")
+    return redirect('/admin/usuarios')
+
+
+@app.route('/admin/usuarios/editar/<int:id>')
+def admin_editar_usuario(id):
+
+    if not is_admin():
+        return redirect('/login')
+
+    usuario = Usuario.obtener_por_id({"id": id})
+
+    if not usuario:
+        flash("Usuario no encontrado", "error")
+        return redirect('/admin/usuarios')
+
+    return render_template("admin_usuario_editar.html", usuario=usuario)
+
+
+@app.route('/admin/usuarios/actualizar/<int:id>', methods=['POST'])
+def admin_actualizar_usuario(id):
+
+    if not is_admin():
+        return redirect('/login')
+
+    data = {
+        "id": id,
+        "nombre": request.form["nombre"],
+        "apellido": request.form["apellido"],
+        "email": request.form["email"],
+        "telefono": request.form["telefono"],
+        "rol": request.form["rol"],
+    }
+
+    Usuario.actualizar(data)
+
+    flash("Usuario actualizado correctamente", "success")
+    return redirect('/admin/usuarios')
+
+
+@app.route('/admin/usuarios/eliminar/<int:id>', methods=['POST'])
+def admin_eliminar_usuario(id):
+
+    if not is_admin():
+        return redirect('/login')
+
+    Usuario.eliminar({"id": id})
+
+    flash("Usuario eliminado correctamente", "success")
+    return redirect('/admin/usuarios')
+
+
+# =====================================================
+# LOGOUT
+# =====================================================
 
 @app.route('/logout')
 def logout():

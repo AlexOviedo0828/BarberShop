@@ -2,14 +2,10 @@ from flask_app import app
 from flask import render_template, request, redirect, flash
 from flask_app.models.peluquero import Peluquero
 
-# listar
-
 
 @app.route('/admin/peluqueros')
 def listar_peluqueros():
     return "Listado de peluqueros"
-
-# crear
 
 
 @app.route('/admin/peluqueros/nuevo')
@@ -21,8 +17,6 @@ def nuevo_peluquero():
 def crear_peluquero():
     return "Guardar peluquero"
 
-# editar
-
 
 @app.route('/admin/peluqueros/editar/<int:id>')
 def editar_peluquero(id):
@@ -32,8 +26,6 @@ def editar_peluquero(id):
 @app.route('/admin/peluqueros/actualizar/<int:id>', methods=['POST'])
 def actualizar_peluquero(id):
     return "Actualizar peluquero"
-
-# eliminar
 
 
 @app.route('/admin/peluqueros/eliminar/<int:id>')

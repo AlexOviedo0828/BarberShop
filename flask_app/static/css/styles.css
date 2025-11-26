@@ -1,5 +1,4 @@
-/* Fondo del login*/
-/* body del login*/
+
 .login-body {
     background: url("../img/baner.png") no-repeat center center fixed;
     background-size: cover;
@@ -9,7 +8,7 @@
     height: 100vh;
     font-family: "Poppins", sans-serif;
 }
-/* body del registro este tiene la imagen distinta*/
+
 .register-body {
     background: url("../img/baner2.png") no-repeat center center fixed;
     background-size: cover;
@@ -19,7 +18,7 @@
     height: 100vh;
     font-family: "Poppins", sans-serif;
 }
-/* Tarjeta del login*/
+
 .login-card {
     width: 25rem;
     background: rgba(141, 28, 170, 0.55);

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Admin | Horarios Barberos</title>
+        <!-- Bootstrap 5 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+    <body class="bg-light">
+    
+    <div class="d-flex">
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="container-fluid p-4">
+    
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Horarios de Barberos</h2>
+               
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCrear">
+                    + Nuevo horario
+                </button>
+            </div>
+    
+            <!-- Mensajes flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, msg in messages %}
+                    <div class="alert alert-{{ 'danger' if category=='horario' else category }} alert-dismissible fade show" role="alert">
+                        {{ msg }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+    
+            <!-- TABLA -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Listado de horarios</h5>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Barbero</th>
+                                    <th>Día</th>
+                                    <th>Hora inicio</th>
+                                    <th>Hora fin</th>
+                                    <th>Descanso</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for h in horarios %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ h.barbero_nombre }}</td>
+                                    <td class="text-capitalize">{{ h.dia }}</td>
+                                    <td>{{ h.hora_inicio }}</td>
+                                    <td>{{ h.hora_fin }}</td>
+                                    <td>
+                                        {% if h.descanso_inicio and h.descanso_fin %}
+                                            {{ h.descanso_inicio }} - {{ h.descanso_fin }}
+                                        {% else %}
+                                            —
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <!-- Botón editar abre modal individual -->
+                                        <button
+                                            class="btn btn-sm btn-outline-secondary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalEditar{{ h.id }}">
+                                            Editar
+                                        </button>
+    
+                                        <!-- Botón eliminar con SweetAlert -->
+                                        <button
+                                            class="btn btn-sm btn-outline-danger btn-eliminar"
+                                            data-id="{{ h.id }}">
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+    
+                                <!-- MODAL EDITAR -->
+                                <div class="modal fade" id="modalEditar{{ h.id }}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <form action="{{ url_for('actualizar_horario', id=h.id) }}" method="POST">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Editar horario</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Barbero</label>
+                                                        <select name="barbero_id" class="form-select" required>
+                                                            <option value="">Seleccione...</option>
+                                                            {% for b in barberos %}
+                                                                <option value="{{ b.id }}"
+                                                                    {% if b.id == h.barbero_id %}selected{% endif %}>
+                                                                    {{ b.nombre }} {{ b.apellido }}
+                                                                </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Día</label>
+                                                        <select name="dia" class="form-select" required>
+                                                            {% for d in ['lunes','martes','miercoles','jueves','viernes','sabado'] %}
+                                                                <option value="{{ d }}" {% if h.dia == d %}selected{% endif %}>
+                                                                    {{ d|capitalize }}
+                                                                </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">Hora inicio</label>
+                                                            <input type="time" name="hora_inicio" class="form-control" value="{{ h.hora_inicio }}" required>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">Hora fin</label>
+                                                            <input type="time" name="hora_fin" class="form-control" value="{{ h.hora_fin }}" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">Descanso inicio</label>
+                                                            <input type="time" name="descanso_inicio" class="form-control" value="{{ h.descanso_inicio or '' }}">
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">Descanso fin</label>
+                                                            <input type="time" name="descanso_fin" class="form-control" value="{{ h.descanso_fin or '' }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">
+                                        No hay horarios registrados todavía.
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+    
+    <!-- MODAL CREAR -->
+    <div class="modal fade" id="modalCrear" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="{{ url_for('crear_horario') }}" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Crear nuevo horario</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Barbero</label>
+                            <select name="barbero_id" class="form-select" required>
+                                <option value="">Seleccione...</option>
+                                {% for b in barberos %}
+                                    <option value="{{ b.id }}">{{ b.nombre }} {{ b.apellido }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Día</label>
+                            <select name="dia" class="form-select" required>
+                                <option value="">Seleccione...</option>
+                                <option value="lunes">Lunes</option>
+                                <option value="martes">Martes</option>
+                                <option value="miercoles">Miércoles</option>
+                                <option value="jueves">Jueves</option>
+                                <option value="viernes">Viernes</option>
+                                <option value="sabado">Sábado</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Hora inicio</label>
+                                <input type="time" name="hora_inicio" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Hora fin</label>
+                                <input type="time" name="hora_fin" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Descanso inicio (opcional)</label>
+                                <input type="time" name="descanso_inicio" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Descanso fin (opcional)</label>
+                                <input type="time" name="descanso_fin" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Crear horario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+    // SweetAlert2 para eliminar
+    document.querySelectorAll('.btn-eliminar').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const id = this.dataset.id;
+            Swal.fire({
+                title: '¿Eliminar horario?',
+                text: "Esta acción no se puede deshacer",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = `/admin/horarios/eliminar/${id}`;
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        });
+    });
+    </script>
+    
+    </body>
+    </html>
