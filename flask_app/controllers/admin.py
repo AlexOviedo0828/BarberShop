@@ -26,7 +26,6 @@ def dashboard_admin():
         "ultimas_citas": Cita.ultimas(5)
     }
     usuario=Usuario.obtener_por_id({"id": session["usuario_id"]})
-    print(f'\n\nUSUARIO ADMIN: {usuario}\n\n')
     nombre=usuario.nombre.capitalize()
     return render_template("admin.html", **data, nombre=nombre)
 
