@@ -25,8 +25,10 @@ def dashboard_admin():
         "pedidos_pendientes": Pedido.pendientes(),
         "ultimas_citas": Cita.ultimas(5)
     }
-
-    return render_template("admin.html", **data)
+    usuario=Usuario.obtener_por_id({"id": session["usuario_id"]})
+    print(f'\n\nUSUARIO ADMIN: {usuario}\n\n')
+    nombre=usuario.nombre.capitalize()
+    return render_template("admin.html", **data, nombre=nombre)
 
 # ADMIN - LISTA DE USUARIOS
 
