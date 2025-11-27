@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `barbershop_db`.`usuarios` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `barbershop_db`.`peluqueros` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NOT NULL,
   `apellido` VARCHAR(100) NOT NULL,
+  `disponible` TINYINT NOT NULL DEFAULT '0',
   `especialidad` VARCHAR(100) NULL DEFAULT NULL,
   `telefono` VARCHAR(20) NULL DEFAULT NULL,
   `imagen` VARCHAR(255) NULL DEFAULT NULL,
@@ -63,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `barbershop_db`.`peluqueros` (
   `fecha_creacion` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -196,6 +198,7 @@ CREATE TABLE IF NOT EXISTS `barbershop_db`.`horarios_barbero` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `barbero_id` INT NOT NULL,
   `dia` ENUM('lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado') NOT NULL,
+  `reservado` TINYINT NOT NULL DEFAULT '0',
   `hora_inicio` TIME NOT NULL,
   `hora_fin` TIME NOT NULL,
   `descanso_inicio` TIME NULL DEFAULT NULL,
@@ -208,6 +211,7 @@ CREATE TABLE IF NOT EXISTS `barbershop_db`.`horarios_barbero` (
     REFERENCES `barbershop_db`.`peluqueros` (`id`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 

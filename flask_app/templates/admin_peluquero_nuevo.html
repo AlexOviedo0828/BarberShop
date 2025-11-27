@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nuevo Usuario | Admin BarberShop</title>
+    <title>Nuevo Peluquero | Admin BarberShop</title>
 
     <!-- BOOTSTRAP -->
     <link
@@ -29,10 +29,10 @@
   <body>
     <div class="d-flex">
       <div class="container-fluid p-4">
-        <h2 class="fw-bold mb-4" style="text-align : center; color : #ffff">Crear Nuevo Usuario</h2>
+        <h2 class="fw-bold mb-4" style="text-align : center; color : #ffff">Crear Nuevo Peluquero</h2>
 
         <form
-          action="/admin/usuarios/crear"
+          action="/admin/peluquero/crear"
           method="POST"
           class="card p-4 shadow-sm border-0"
         >
@@ -53,30 +53,17 @@
             </div>
 
             <div class="col-md-6 mb-3">
-              <label>Email</label>
-              <input type="email" name="email" class="form-control" required />
-            </div>
-
-            <div class="col-md-6 mb-3">
               <label>Teléfono</label>
               <input type="text" name="telefono" class="form-control" />
             </div>
 
             <div class="col-md-6 mb-3">
-              <label>Contraseña</label>
-              <input
-                type="password"
-                name="password"
-                class="form-control"
-                required
-              />
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label>Rol</label>
-              <select name="rol" class="form-control">
-                <option value="usuario">Usuario</option>
-                <option value="admin">Administrador</option>
+              <label>Especialidad</label>
+              <select name="especialidad" class="form-control">
+                <option value="">----</option>
+                <option value="corte">Corte</option>
+                <option value="barba">Barba</option>
+                <option value="tintura">Tintura</option>
               </select>
             </div>
           </div>
