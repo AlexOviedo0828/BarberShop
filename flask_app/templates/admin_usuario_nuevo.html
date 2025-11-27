@@ -25,11 +25,20 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/admin.css') }}"
     />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/logout.css')}}">
   </head>
   <body>
     <div class="d-flex">
       <div class="container-fluid p-4">
-        <h2 class="fw-bold mb-4" style="text-align : center; color : #ffff">Crear Nuevo Usuario</h2>
+        <div id="navbar">
+          <a href="/admin/usuarios" class="btn btn-outline-secondary me-3">
+              <i class="bi bi-arrow-left"></i> Volver
+          </a>
+          <h2 class="fw-bold mb-4" style="text-align : center; color : #ffff">Crear Nuevo Usuario</h2>
+          <button class="btn btn-danger" onclick="location.href='{{ url_for('logout') }}'">
+            Cerrar sesión
+          </button>
+        </div>
 
         <form
           action="/admin/usuarios/crear"

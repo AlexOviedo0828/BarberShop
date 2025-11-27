@@ -40,6 +40,9 @@
           <a href="/admin/usuarios/nuevo" class="btn btn-success">
             <i class="bi bi-person-plus"></i> Nuevo Usuario
           </a>
+          <button class="btn btn-danger" onclick="location.href='{{ url_for('logout') }}'">
+          Cerrar sesión
+          </button>
         </div>
 
             <!-- Mensajes flash -->
@@ -140,7 +143,7 @@
         });
       }
     </script>
-    
+
     <!--  DELETE FLASH-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>

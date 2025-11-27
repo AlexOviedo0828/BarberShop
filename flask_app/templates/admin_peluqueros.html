@@ -36,11 +36,15 @@
             <h2 class="fw-bold m-0">
               <i class="bi bi-scissors"></i> Gestión de Peluqueros
             </h2>
+            
           </div>
 
           <a href="{{url_for('nuevo_peluquero')}}" class="btn btn-success">
             <i class="bi bi-person-plus"></i> Nuevo Peluquero
           </a>
+          <button class="btn btn-danger" onclick="location.href='{{ url_for('logout') }}'">
+            Cerrar sesión
+          </button>
         </div>
 
             <!-- Mensajes flash -->
