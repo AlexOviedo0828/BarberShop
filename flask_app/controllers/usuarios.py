@@ -131,7 +131,7 @@ def dashboard_usuario():
         "ultimas_citas": Cita.ultimas_usuario({"usuario_id": usuario.id}),
         "ultimos_pedidos": Pedido.ultimos({"usuario_id": usuario.id})
     }
-
+    data['usuario'].nombre = data['usuario'].nombre.capitalize()
     return render_template("usuario.html", **data)
 
 

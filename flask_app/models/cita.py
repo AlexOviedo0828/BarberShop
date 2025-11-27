@@ -51,46 +51,46 @@ class Cita:
     # Citas pendientes del usuario
 
 
-@classmethod
-def pendientes_usuario(cls, data):
-    query = """
-        SELECT COUNT(id) AS total
-        FROM citas
-        WHERE usuario_id = %(usuario_id)s
-        AND estado = 'pendiente';
-    """
-    result = connectToMySQL(cls.db).query_db(query, data)
-    return result[0]['total'] if result else 0
+    @classmethod
+    def pendientes_usuario(cls, data):
+        query = """
+            SELECT COUNT(id) AS total
+            FROM citas
+            WHERE usuario_id = %(usuario_id)s
+            AND estado = 'pendiente';
+        """
+        result = connectToMySQL(cls.db).query_db(query, data)
+        return result[0]['total'] if result else 0
 
 
-# Próxima cita del usuario
-@classmethod
-def proxima(cls, data):
-    query = """
-        SELECT c.id, c.fecha, c.hora,
-               CONCAT(p.nombre, ' ', p.apellido) AS peluquero_nombre
-        FROM citas c
-        JOIN peluqueros p ON p.id = c.peluquero_id
-        WHERE c.usuario_id = %(usuario_id)s
-        AND c.estado IN ('pendiente','confirmada')
-        AND c.fecha >= CURDATE()
-        ORDER BY c.fecha ASC, c.hora ASC
-        LIMIT 1;
-    """
-    result = connectToMySQL(cls.db).query_db(query, data)
-    return result[0] if result else None
+    # Próxima cita del usuario
+    @classmethod
+    def proxima(cls, data):
+        query = """
+            SELECT c.id, c.fecha, c.hora,
+                CONCAT(p.nombre, ' ', p.apellido) AS peluquero_nombre
+            FROM citas c
+            JOIN peluqueros p ON p.id = c.peluquero_id
+            WHERE c.usuario_id = %(usuario_id)s
+            AND c.estado IN ('pendiente','confirmada')
+            AND c.fecha >= CURDATE()
+            ORDER BY c.fecha ASC, c.hora ASC
+            LIMIT 1;
+        """
+        result = connectToMySQL(cls.db).query_db(query, data)
+        return result[0] if result else None
 
 
-# Últimas citas del usuario
-@classmethod
-def ultimas_usuario(cls, data):
-    query = """
-        SELECT c.id, c.fecha, c.hora, c.estado,
-               CONCAT(p.nombre, ' ', p.apellido) AS peluquero_nombre
-        FROM citas c
-        JOIN peluqueros p ON p.id = c.peluquero_id
-        WHERE c.usuario_id = %(usuario_id)s
-        ORDER BY c.fecha DESC, c.hora DESC
-        LIMIT 5;
-    """
-    return connectToMySQL(cls.db).query_db(query, data)
+    # Últimas citas del usuario
+    @classmethod
+    def ultimas_usuario(cls, data):
+        query = """
+            SELECT c.id, c.fecha, c.hora, c.estado,
+                CONCAT(p.nombre, ' ', p.apellido) AS peluquero_nombre
+            FROM citas c
+            JOIN peluqueros p ON p.id = c.peluquero_id
+            WHERE c.usuario_id = %(usuario_id)s
+            ORDER BY c.fecha DESC, c.hora DESC
+            LIMIT 5;
+        """
+        return connectToMySQL(cls.db).query_db(query, data)

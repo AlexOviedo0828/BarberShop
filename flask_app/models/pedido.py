@@ -56,26 +56,26 @@ class Pedido:
     # Pedidos en curso del usuario
 
 
-@classmethod
-def en_curso(cls, data):
-    query = """
-        SELECT COUNT(id) AS total
-        FROM pedidos
-        WHERE usuario_id = %(usuario_id)s
-        AND estado IN ('pendiente', 'pagado');
-    """
-    result = connectToMySQL(cls.db).query_db(query, data)
-    return result[0]['total'] if result else 0
+    @classmethod
+    def en_curso(cls, data):
+        query = """
+            SELECT COUNT(id) AS total
+            FROM pedidos
+            WHERE usuario_id = %(usuario_id)s
+            AND estado IN ('pendiente', 'pagado');
+        """
+        result = connectToMySQL(cls.db).query_db(query, data)
+        return result[0]['total'] if result else 0
 
 
-# Últimos pedidos del usuario
-@classmethod
-def ultimos(cls, data):
-    query = """
-        SELECT id, total, estado, fecha
-        FROM pedidos
-        WHERE usuario_id = %(usuario_id)s
-        ORDER BY fecha DESC
-        LIMIT 5;
-    """
-    return connectToMySQL(cls.db).query_db(query, data)
+    # Últimos pedidos del usuario
+    @classmethod
+    def ultimos(cls, data):
+        query = """
+            SELECT id, total, estado, fecha
+            FROM pedidos
+            WHERE usuario_id = %(usuario_id)s
+            ORDER BY fecha DESC
+            LIMIT 5;
+        """
+        return connectToMySQL(cls.db).query_db(query, data)
