@@ -29,7 +29,7 @@ class Peluquero:
 
     @classmethod
     def total(cls):
-        query = "SELECT COUNT(id) AS total FROM peluqueros;"
+        query = "SELECT COUNT(id) AS total FROM peluqueros WHERE disponible=1;"
         result = connectToMySQL(cls.db).query_db(query)
         return result[0]['total'] if result else 0
 
