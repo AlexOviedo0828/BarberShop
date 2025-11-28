@@ -12,6 +12,7 @@ class HorarioBarbero:
         self.dia = data['dia']
         self.hora_inicio = str(data['hora_inicio'])
         self.hora_fin = str(data['hora_fin'])
+        self.reservada = data.get('reservada', 0)
         self.descanso_inicio = str(
             data['descanso_inicio']) if data['descanso_inicio'] else None
         self.descanso_fin = str(

@@ -24,15 +24,25 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/admin.css') }}"
     />
+
+    <!-- LOG OUT -->
+     <link rel="stylesheet" href="{{url_for('static', filename='css/logout.css')}}">
+
+
   </head>
 
   <body>
     <div class="container-fluid p-4">
-      <div class="welcome-box text-white rounded p-4 mb-4 shadow">
-        <h3 class="fw-bold">¡Bienvenido, Administrador!</h3>
-        <p class="mb-0">
-          Aquí podrás gestionar toda la barbería desde un solo lugar.
-        </p>
+      <div id="navbar" class="welcome-box text-white rounded p-4 mb-4 shadow">
+        <div>
+          <h3 class="fw-bold">¡Bienvenido, {{nombre}}!</h3>
+          <p class="mb-0">
+            Aquí podrás gestionar toda la barbería desde un solo lugar.
+          </p>
+        </div>
+        <button class="btn btn-danger" onclick="location.href='{{ url_for('logout') }}'">
+          Cerrar sesión
+        </button>
       </div>
 
       <div class="row g-4 mb-4">
@@ -99,7 +109,7 @@
             href="/admin/horarios"
             class="btn btn-secondary w-100 quick-btn shadow-sm"
           >
-            <i class="bi bi-clock-history fs-3 d-block"></i>
+            <i class="bi bi-clipboard2 fs-3 d-block"></i>
             Horarios
           </a>
         </div>
