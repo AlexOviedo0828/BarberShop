@@ -5,77 +5,103 @@ class Pedido:
     db = "barbershop_db"
 
     def __init__(self, data):
-        self.id = data['id']
-        self.usuario_id = data['usuario_id']
-        self.peluquero_id = data['peluquero_id']
-        self.fecha = data['fecha']
-        self.total = data['total']
-        self.estado = data['estado']
-        self.direccion_envio = data['direccion_envio']
-        self.estado_despacho = data['estado_despacho']
-        self.metodo_pago = data['metodo_pago']
+        self.id = data["id"]
+        self.usuario_id = data["usuario_id"]
+        self.total = data["total"]
+        self.estado = data["estado"]
+        self.fecha = data["fecha"]
+        self.direccion = data.get("direccion")
+        self.metodo_pago = data.get("metodo_pago")
 
-    # ---------------------------------------
-    # CREAR PEDIDO
-    # ---------------------------------------
+    # ============================================
+    # ✔ OBTENER TODOS
+    # ============================================
+    @classmethod
+    def obtener_todos(cls):
+        query = "SELECT * FROM pedidos ORDER BY fecha DESC;"
+        results = connectToMySQL(cls.db).query_db(query)
+        return [cls(p) for p in results] if results else []
 
+    # ============================================
+    # ✔ OBTENER POR ID
+    # ============================================
+    @classmethod
+    def obtener_por_id(cls, data):
+        query = "SELECT * FROM pedidos WHERE id = %(id)s LIMIT 1;"
+        result = connectToMySQL(cls.db).query_db(query, data)
+        return cls(result[0]) if result else None
+
+    # ============================================
+    # ✔ CREAR
+    # ============================================
     @classmethod
     def crear(cls, data):
         query = """
-            INSERT INTO pedidos
-            (usuario_id, peluquero_id, total, estado,
-             direccion_envio, estado_despacho, metodo_pago)
-            VALUES (%(usuario_id)s, %(peluquero_id)s, %(total)s, %(estado)s,
-                    %(direccion_envio)s, %(estado_despacho)s, %(metodo_pago)s);
+            INSERT INTO pedidos (usuario_id, total, estado, fecha, direccion, metodo_pago)
+            VALUES (%(usuario_id)s, %(total)s, %(estado)s, NOW(), %(direccion)s, %(metodo_pago)s);
         """
         return connectToMySQL(cls.db).query_db(query, data)
 
-    # ---------------------------------------
-    # OBTENER PEDIDOS POR USUARIO
-    # ---------------------------------------
-
+    # ============================================
+    # ✔ ACTUALIZAR
+    # ============================================
     @classmethod
-    def obtener_por_usuario(cls, data):
-        query = "SELECT * FROM pedidos WHERE usuario_id = %(usuario_id)s;"
-        results = connectToMySQL(cls.db).query_db(query, data)
-        return [cls(r) for r in results] if results else []
-
-    # ---------------------------------------
-    # TOTAL DE PEDIDOS PENDIENTES
-    # ---------------------------------------
-
-    @classmethod
-    def pendientes(cls):
+    def actualizar(cls, data):
         query = """
-            SELECT COUNT(id) AS total
-            FROM pedidos
-            WHERE estado = 'pendiente';
+            UPDATE pedidos
+            SET total = %(total)s,
+                estado = %(estado)s,
+                direccion = %(direccion)s,
+                metodo_pago = %(metodo_pago)s
+            WHERE id = %(id)s;
         """
-        result = connectToMySQL(cls.db).query_db(query)
-        return result[0]['total'] if result else 0
-    # Pedidos en curso del usuario
+        return connectToMySQL(cls.db).query_db(query, data)
 
+    # ============================================
+    # ✔ ELIMINAR
+    # ============================================
+    @classmethod
+    def eliminar(cls, data):
+        query = "DELETE FROM pedidos WHERE id = %(id)s;"
+        return connectToMySQL(cls.db).query_db(query, data)
 
+    # ============================================
+    # ✔ EN CURSO DEL USUARIO
+    # ============================================
     @classmethod
     def en_curso(cls, data):
         query = """
-            SELECT COUNT(id) AS total
-            FROM pedidos
+            SELECT * FROM pedidos
             WHERE usuario_id = %(usuario_id)s
-            AND estado IN ('pendiente', 'pagado');
+            AND estado = 'en curso'
+            ORDER BY fecha DESC;
         """
-        result = connectToMySQL(cls.db).query_db(query, data)
-        return result[0]['total'] if result else 0
+        results = connectToMySQL(cls.db).query_db(query, data)
+        return [cls(r) for r in results] if results else []
 
-
-    # Últimos pedidos del usuario
+    # ============================================
+    # ✔ ÚLTIMOS 5 DEL USUARIO
+    # ============================================
     @classmethod
     def ultimos(cls, data):
         query = """
-            SELECT id, total, estado, fecha
-            FROM pedidos
+            SELECT * FROM pedidos
             WHERE usuario_id = %(usuario_id)s
             ORDER BY fecha DESC
             LIMIT 5;
         """
-        return connectToMySQL(cls.db).query_db(query, data)
+        results = connectToMySQL(cls.db).query_db(query, data)
+        return [cls(r) for r in results] if results else []
+
+    # ============================================
+    # ✔ PENDIENTES — PARA ADMIN
+    # ============================================
+    @classmethod
+    def pendientes(cls):
+        query = """
+            SELECT * FROM pedidos
+            WHERE estado = 'pendiente'
+            ORDER BY fecha DESC;
+        """
+        results = connectToMySQL(cls.db).query_db(query)
+        return [cls(r) for r in results] if results else []

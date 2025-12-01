@@ -9,12 +9,8 @@ from flask_app.models.pedido import Pedido
 bcrypt = Bcrypt(app)
 
 
-# MIDDLEWARE: SOLO ADMIN
 def is_admin():
     return "usuario_id" in session and session.get("rol") == "admin"
-
-
-# LOGIN
 
 
 @app.route('/')
@@ -29,7 +25,6 @@ def login_procesar():
     email = request.form['email']
     password = request.form['password']
 
-    # Validaciones
     if len(email) == 0 or len(password) == 0:
         flash("Todos los campos son obligatorios", "error")
         return redirect('/login')
@@ -52,8 +47,6 @@ def login_procesar():
         return redirect('/dashboard/admin')
 
     return redirect('/dashboard/usuario')
-
-# REGISTRO
 
 
 @app.route('/registro')
@@ -112,125 +105,35 @@ def registro_procesar():
     return redirect('/login')
 
 
-# DASHBOARD USUARIO
-
-
-@app.route("/dashboard/usuario")
+@app.route('/dashboard/usuario')
 def dashboard_usuario():
 
-    if "usuario_id" not in session:
-        return redirect("/login")
-
-    usuario = Usuario.obtener_por_id({"id": session["usuario_id"]})
-
-    data = {
-        "usuario": usuario,
-        "citas_pendientes": Cita.pendientes_usuario({"usuario_id": usuario.id}),
-        "proxima_cita": Cita.proxima({"usuario_id": usuario.id}),
-        "pedidos_en_curso": Pedido.en_curso({"usuario_id": usuario.id}),
-        "ultimas_citas": Cita.ultimas_usuario({"usuario_id": usuario.id}),
-        "ultimos_pedidos": Pedido.ultimos({"usuario_id": usuario.id})
-    }
-    data['usuario'].nombre = data['usuario'].nombre.capitalize()
-    return render_template("usuario.html", **data)
-
-
-# CRUD ADMIN DE USUARIOS
-
-
-@app.route('/admin/usuarios')
-def admin_lista_usuarios():
-
-    if not is_admin():
-        flash("No tienes permisos para acceder", "error")
+    if 'usuario_id' not in session:
         return redirect('/login')
 
-    usuarios = Usuario.obtener_todos()
+    usuario_id = session["usuario_id"]
 
-    return render_template("admin_usuarios.html", usuarios=usuarios)
+    citas_pendientes_list = Cita.pendientes_usuario({"usuario_id": usuario_id})
+    citas_pendientes = len(citas_pendientes_list)
+    proxima_cita = Cita.proxima({"usuario_id": usuario_id})
+    ultimas_citas = Cita.ultimas_usuario({"usuario_id": usuario_id})
 
+    pedidos_en_curso = Pedido.en_curso({"usuario_id": usuario_id})
+    ultimos_pedidos = Pedido.ultimos({"usuario_id": usuario_id})
 
-@app.route('/admin/usuarios/nuevo')
-def admin_nuevo_usuario():
+    usuario = Usuario.obtener_por_id({"id": usuario_id})
+    nombre = usuario.nombre.capitalize()
 
-    if not is_admin():
-        return redirect('/login')
-
-    return render_template("admin_usuario_nuevo.html")
-
-
-@app.route('/admin/usuarios/crear', methods=['POST'])
-def admin_crear_usuario():
-
-    if not is_admin():
-        return redirect('/login')
-
-    pw_hash = bcrypt.generate_password_hash(request.form["password"])
-
-    data = {
-        "nombre": request.form["nombre"],
-        "apellido": request.form["apellido"],
-        "email": request.form["email"],
-        "telefono": request.form["telefono"],
-        "password": pw_hash,
-        "rol": request.form["rol"]
-    }
-
-    Usuario.crear(data)
-
-    flash("Usuario creado correctamente", "success")
-    return redirect('/admin/usuarios')
-
-
-@app.route('/admin/usuarios/editar/<int:id>')
-def admin_editar_usuario(id):
-
-    if not is_admin():
-        return redirect('/login')
-
-    usuario = Usuario.obtener_por_id({"id": id})
-
-    if not usuario:
-        flash("Usuario no encontrado", "error")
-        return redirect('/admin/usuarios')
-
-    return render_template("admin_usuario_editar.html", usuario=usuario)
-
-
-@app.route('/admin/usuarios/actualizar/<int:id>', methods=['POST'])
-def admin_actualizar_usuario(id):
-
-    if not is_admin():
-        return redirect('/login')
-
-    data = {
-        "id": id,
-        "nombre": request.form["nombre"],
-        "apellido": request.form["apellido"],
-        "email": request.form["email"],
-        "telefono": request.form["telefono"],
-        "rol": request.form["rol"],
-    }
-
-    Usuario.actualizar(data)
-
-    flash("Usuario actualizado correctamente", "success")
-    return redirect('/admin/usuarios')
-
-
-@app.route('/admin/usuarios/eliminar/<int:id>', methods=['POST'])
-def admin_eliminar_usuario(id):
-
-    if not is_admin():
-        return redirect('/login')
-
-    Usuario.eliminar({"id": id})
-
-    flash("Usuario eliminado correctamente", "success")
-    return redirect('/admin/usuarios')
-
-
-# LOGOUT
+    return render_template(
+        "usuario.html",
+        usuario=usuario,
+        nombre=nombre,
+        citas_pendientes=citas_pendientes,
+        proxima_cita=proxima_cita,
+        ultimas_citas=ultimas_citas,
+        pedidos_en_curso=pedidos_en_curso,
+        ultimos_pedidos=ultimos_pedidos
+    )
 
 
 @app.route('/logout')

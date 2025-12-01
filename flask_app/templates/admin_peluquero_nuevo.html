@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nuevo Peluquero | Admin BarberShop</title>
+    <title>Registrar Peluquero | BarberShop</title>
 
     <!-- BOOTSTRAP -->
     <link
@@ -13,73 +13,123 @@
 
     <!-- ICONOS -->
     <link
-      rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+      rel="stylesheet"
     />
 
-    <!-- SWEETALERT -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- CSS PERSONAL -->
+    <!-- CSS GENERAL -->
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/admin.css') }}"
+      href="{{ url_for('static', filename='css/usuario.css') }}"
     />
-    <link rel="stylesheet" href="{{url_for('static', filename='css/logout.css')}}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
+
   <body>
-    <div class="d-flex">
-      <div class="container-fluid p-4">
-        <div id="navbar">
-          <a href="/admin/peluqueros" class="btn btn-outline-secondary me-3">
-              <i class="bi bi-arrow-left"></i> Volver
-          </a>
-          <h2 class="fw-bold mb-4" style="text-align : center; color : #ffff">Crear Nuevo Peluquero</h2>
-          <button class="btn btn-danger" onclick="location.href='{{ url_for('logout') }}'">
-              Cerrar sesión
-          </button>
-        </div>
+    <main class="contenido">
+      <div
+        class="glass-header d-flex justify-content-between align-items-center mb-4"
+      >
+        <h2 class="fw-bold mb-0">
+          <i class="bi bi-file-plus"></i> Registrar Nuevo Peluquero
+        </h2>
+
+        <a href="/admin/peluqueros" class="btn btn-outline-light">
+          <i class="bi bi-arrow-left"></i> Volver
+        </a>
+      </div>
+
+      <div class="glass-panel p-4">
         <form
           action="/admin/peluquero/crear"
           method="POST"
-          class="card p-4 shadow-sm border-0"
+          enctype="multipart/form-data"
         >
           <div class="row">
+            <!-- Nombre -->
             <div class="col-md-6 mb-3">
-              <label>Nombre</label>
-              <input type="text" name="nombre" class="form-control" required />
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label>Apellido</label>
+              <label class="form-label text-white">Nombre</label>
               <input
                 type="text"
-                name="apellido"
-                class="form-control"
+                name="nombre"
+                class="form-control glass-input"
                 required
               />
             </div>
 
+            <!-- Apellido -->
             <div class="col-md-6 mb-3">
-              <label>Teléfono</label>
-              <input type="text" name="telefono" class="form-control" />
+              <label class="form-label text-white">Apellido</label>
+              <input
+                type="text"
+                name="apellido"
+                class="form-control glass-input"
+                required
+              />
             </div>
 
+            <!-- Teléfono -->
             <div class="col-md-6 mb-3">
-              <label>Especialidad</label>
-              <select name="especialidad" class="form-control">
-                <option value="">----</option>
+              <label class="form-label text-white">Teléfono</label>
+              <input
+                type="text"
+                name="telefono"
+                class="form-control glass-input"
+              />
+            </div>
+
+            <!-- Especialidad -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label text-white">Especialidad</label>
+              <select name="especialidad" class="form-select glass-input">
+                <option value="">--</option>
                 <option value="corte">Corte</option>
                 <option value="barba">Barba</option>
                 <option value="tintura">Tintura</option>
               </select>
             </div>
+
+            <!-- Foto -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label text-white">Foto del peluquero</label>
+              <input
+                type="file"
+                name="imagen"
+                class="form-control glass-input"
+                accept="image/*"
+                onchange="preview(event)"
+              />
+            </div>
+
+            <div class="col-md-6 mb-3 text-center">
+              <img
+                id="preview-img"
+                style="
+                  display: none;
+                  width: 220px;
+                  height: 220px;
+                  object-fit: cover;
+                "
+                class="rounded border glass-img"
+              />
+            </div>
           </div>
 
-          <button class="btn btn-success mt-3">Crear Usuario</button>
+          <button class="btn btn-success mt-3 px-4">
+            <i class="bi bi-check2-circle"></i> Crear Peluquero
+          </button>
         </form>
       </div>
-    </div>
+    </main>
+
+    <script>
+      function preview(event) {
+        const img = document.getElementById("preview-img");
+        img.src = URL.createObjectURL(event.target.files[0]);
+        img.style.display = "block";
+      }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>

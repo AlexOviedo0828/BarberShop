@@ -1,0 +1,133 @@
+/* ================================
+   ESTILOS GENERALES
+================================ */
+body {
+    background: url('/static/img/fondousu.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(6, 6, 6);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.admin-nav {
+
+  backdrop-filter: blur(10px);
+  padding: 12px 25px;
+  display: flex;
+  justify-content: flex-end; /* ⬅️ Ahora todo se va al lado derecho */
+}
+  
+  /* ================================
+     TARJETA PRINCIPAL
+  ================================ */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  /* Título sección */
+  .section-title {
+    color: #8ef57a;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: left;
+  }
+  
+  .section-title i {
+    margin-right: 8px;
+  }
+  
+  /* ================================
+     TARJETAS DE CITAS
+  ================================ */
+  .glass-subcard {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 18px;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+  }
+  
+  .glass-subcard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
+  }
+  
+  /* Texto interno */
+  .glass-subcard h5,
+  .glass-subcard h6 {
+    color: #060606;
+  }
+  
+  .text-muted {
+    color: #040404 !important;
+  }
+  
+  /* ================================
+     BADGES PERSONALIZADOS
+  ================================ */
+  .badge.bg-success {
+    background-color: #7aff9c !important;
+    color: #000 !important;
+    font-weight: 600;
+  }
+  
+  .badge.bg-warning {
+    background-color: #ffe46b !important;
+    color: #000 !important;
+    font-weight: 600;
+  }
+  
+  /* ================================
+     BOTONES
+  ================================ */
+  .btn-outline-danger {
+    border-color: #ff6161 !important;
+    color: #ff7474 !important;
+    transition: 0.2s ease;
+  }
+  
+  .btn-outline-danger:hover {
+    background: #ff4747 !important;
+    color: #fff !important;
+  }
+  
+  /* Botón volver */
+  .btn-success {
+    background-color: #8ef57a !important;
+    border-color: #8ef57a !important;
+    color: #000 !important;
+    font-weight: 600;
+    transition: 0.2s ease;
+  }
+  
+  .btn-success:hover {
+    filter: brightness(1.1);
+  }
+  
+  /* ================================
+     ESTADO: NO HAY CITAS
+  ================================ */
+  .text-center i {
+    color: #8ef57a;
+  }
+  
+  /* ================================
+     RESPONSIVE
+  ================================ */
+  @media (max-width: 768px) {
+    .glass-card {
+      padding: 20px;
+    }
+  
+    .glass-subcard {
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+  }

@@ -1,4 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL
+import json
 
 
 class Peluquero:
@@ -10,61 +11,81 @@ class Peluquero:
         self.apellido = data['apellido']
         self.especialidad = data['especialidad']
         self.telefono = data['telefono']
-        self.imagen = data['imagen']
+
+        # CONVERTIR DE JSON → DICCIONARIO
+        if data['imagen']:
+            try:
+                self.imagen = json.loads(data['imagen'])
+            except:
+                self.imagen = None
+        else:
+            self.imagen = None
+
         self.servicios_realizados = data['servicios_realizados']
         self.fecha_creacion = data['fecha_creacion']
         self.disponible = data['disponible']
 
+    # ============================
+    # TRAER TODOS
+    # ============================
     @classmethod
-    def get_all(cls):
+    def obtener_todos(cls):
         query = "SELECT * FROM peluqueros;"
         results = connectToMySQL(cls.db).query_db(query)
         peluqueros = []
-        for peluquero in results:
-            peluqueros.append(cls(peluquero))
-            print(f'\n\nPELUQUERO: {peluquero}\n\n')
+        for p in results:
+            peluqueros.append(cls(p))
         return peluqueros
 
-    # TOTAL DE PELUQUEROS
-
+    # ============================
+    # INSERTAR
+    # ============================
     @classmethod
-    def total(cls):
-        query = "SELECT COUNT(id) AS total FROM peluqueros WHERE disponible=1;"
-        result = connectToMySQL(cls.db).query_db(query)
-        return result[0]['total'] if result else 0
+    def insert(cls, data):
+        query = """
+            INSERT INTO peluqueros 
+            (nombre, apellido, especialidad, telefono, imagen, servicios_realizados, fecha_creacion, disponible)
+            VALUES (%(nombre)s, %(apellido)s, %(especialidad)s, %(telefono)s, %(imagen)s, %(servicios_realizados)s, NOW(), 1);
+        """
+        return connectToMySQL(cls.db).query_db(query, data)
 
-    # OBTENER PELUQUERO POR ID
-
+    # ============================
+    # OBTENER POR ID
+    # ============================
     @classmethod
     def obtener_por_id(cls, data):
         query = "SELECT * FROM peluqueros WHERE id = %(id)s LIMIT 1;"
         result = connectToMySQL(cls.db).query_db(query, data)
         return cls(result[0]) if result else None
 
-    @classmethod
-    def insert(cls, data):
-        query = """
-            INSERT INTO peluqueros (nombre, apellido, especialidad, telefono, imagen, servicios_realizados, fecha_creacion, disponible)
-            VALUES (%(nombre)s, %(apellido)s, %(especialidad)s, %(telefono)s, %(imagen)s, %(servicios_realizados)s, NOW(), 1);
-        """
-        return connectToMySQL(cls.db).query_db(query, data)
-    
+    # ============================
+    # ACTUALIZAR
+    # ============================
     @classmethod
     def update(cls, data):
         query = """
             UPDATE peluqueros
-            SET nombre = %(nombre)s,
-                apellido = %(apellido)s,
-                especialidad = %(especialidad)s,
-                telefono = %(telefono)s,
-                imagen = %(imagen)s,
-                servicios_realizados = %(servicios_realizados)s,
-                disponible = %(disponible)s
-            WHERE id = %(id)s;
+            SET nombre=%(nombre)s,
+                apellido=%(apellido)s,
+                especialidad=%(especialidad)s,
+                telefono=%(telefono)s,
+                imagen=%(imagen)s,
+                servicios_realizados=%(servicios_realizados)s,
+                disponible=%(disponible)s
+            WHERE id=%(id)s;
         """
         return connectToMySQL(cls.db).query_db(query, data)
 
+    # ============================
+    # ELIMINAR
+    # ============================
     @classmethod
     def delete(cls, data):
         query = "DELETE FROM peluqueros WHERE id = %(id)s;"
         return connectToMySQL(cls.db).query_db(query, data)
+
+    @classmethod
+    def total(cls):
+        query = "SELECT COUNT(*) AS total FROM peluqueros;"
+        result = connectToMySQL('barbershop_db').query_db(query)
+        return result[0]['total']

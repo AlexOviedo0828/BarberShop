@@ -20,7 +20,7 @@
   </head>
   <body class="register-body">
     <div class="register-card" style="width: 32rem">
-      <h3 class="text-center mb-4" style="font-weight: bold;">Crear Cuenta</h3>
+      <h3 class="text-center mb-4" style="font-weight: bold">Crear Cuenta</h3>
 
       <!-- mensaje switAlert-->
       {% with mensajes = get_flashed_messages(with_categories=true) %} {% if
@@ -83,10 +83,8 @@
 
         <hr class="text-light" />
         <div class="text-center">
-        <b>¿Ya tienes cuenta?</b>
-        <a href="/login" class="text-center d-block">
-           Inicia sesión
-        </a>
+          <b>¿Ya tienes cuenta?</b>
+          <a href="/login" class="text-center d-block"> Inicia sesión </a>
         </div>
       </form>
     </div>

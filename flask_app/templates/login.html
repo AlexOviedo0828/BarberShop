@@ -20,7 +20,7 @@
   </head>
   <body class="login-body">
     <div class="login-card">
-      <h3 class="text-center mb-4" style="font-weight: bold;">Iniciar Sesión</h3>
+      <h3 class="text-center mb-4" style="font-weight: bold">Iniciar Sesión</h3>
 
       <!--mensaje switAlert -->
       {% with mensajes = get_flashed_messages(with_categories=true) %} {% if
@@ -59,10 +59,10 @@
 
       <hr class="text-light" />
       <div class="text-center">
-      <b>¿No tienes cuenta?</b>
-      <a href="/registro" class="text-center d-block mt-2">
-        Regístrate aquí
-      </a>
+        <b>¿No tienes cuenta?</b>
+        <a href="/registro" class="text-center d-block mt-2">
+          Regístrate aquí
+        </a>
       </div>
     </div>
     <script src="{{ url_for('static', filename='js/login.js') }}"></script>

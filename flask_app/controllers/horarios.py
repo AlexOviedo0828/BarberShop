@@ -13,11 +13,15 @@ def admin_horarios():
     if not is_admin():
         flash("No tienes permisos para acceder a esta sección", "danger")
         return redirect("/")
+
     horarios = HorarioBarbero.get_all_with_barbero()
-    barberos = Peluquero.get_all()
-    return render_template("admin_horarios.html",
-                           horarios=horarios,
-                           barberos=barberos)
+    barberos = Peluquero.obtener_todos()
+
+    return render_template(
+        "admin_horarios.html",
+        horarios=horarios,
+        barberos=barberos
+    )
 
 
 @app.route("/admin/horarios/crear", methods=["POST"])
