@@ -5,6 +5,9 @@ from flask_app.models.usuario import Usuario
 from flask_app.models.peluquero import Peluquero
 from flask_app.models.cita import Cita
 from flask_app.models.pedido import Pedido
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt(app)
 
 
 @app.route('/dashboard/admin')
@@ -63,19 +66,68 @@ def admin_usuario_crear():
     if not is_admin():
         return redirect('/login')
 
-    nombre = request.form['nombre']
-    email = request.form['email']
-    telefono = request.form.get('telefono')
-    rol = request.form.get('rol', 'usuario')
-    password = request.form['password']
+    data={
+        "nombre": request.form['nombre'],
+        "apellido": request.form['apellido'],
+        "email": request.form['email'],
+        "telefono": request.form.get('telefono'),
+        "rol": request.form.get('rol', 'usuario'),
+        "password": request.form['password']
+    }
 
-    Usuario.crear({
-        "nombre": nombre,
-        "email": email,
-        "telefono": telefono,
-        "rol": rol,
-        "password": password
-    })
+    data['password'] = bcrypt.generate_password_hash(data['password'])
+
+    Usuario.crear(data)
 
     flash("Usuario creado correctamente", "success")
+    return redirect('/admin/usuarios')
+
+@app.route('/admin/usuarios/editar/<int:id>')
+def admin_usuario_editar(id):
+    """
+    Renderiza el formulario para editar un usuario desde el panel admin.
+    """
+    if not is_admin():
+        return redirect('/login')
+
+    usuario = Usuario.obtener_por_id({"id": id})
+    if not usuario:
+        flash("Usuario no encontrado", "error")
+        return redirect('/admin/usuarios')
+
+    return render_template("admin_usuario_editar.html", usuario=usuario)
+
+@app.route('/admin/usuarios/actualizar/<int:id>', methods=['POST'])
+def admin_usuario_actualizar(id):
+    """
+    Procesa el formulario de actualización de usuario.
+    """
+    if not is_admin():
+        return redirect('/login')
+
+    data={
+        "id": id,
+        "nombre": request.form['nombre'],
+        "apellido": request.form['apellido'],
+        "email": request.form['email'],
+        "telefono": request.form.get('telefono'),
+        "rol": request.form.get('rol', 'usuario')
+    }
+
+    Usuario.actualizar(data)
+
+    flash("Usuario actualizado correctamente", "success")
+    return redirect('/admin/usuarios')
+
+@app.route('/admin/usuarios/eliminar/<int:id>' , methods=['POST'])
+def admin_usuario_eliminar(id):
+    """
+    Elimina un usuario desde el panel admin.
+    """
+    if not is_admin():
+        return redirect('/login')
+
+    Usuario.eliminar({"id": id})
+
+    flash("Usuario eliminado correctamente", "success")
     return redirect('/admin/usuarios')
