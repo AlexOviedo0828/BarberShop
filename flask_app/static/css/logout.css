@@ -4,3 +4,52 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.btn-danger{
+    background-color: #634775;
+}
+
+.btn-danger:hover{
+    background-color: #5c49dc;
+}
+
+.btn-primary{
+    background-color: #5c49dc;
+}
+.btn-primary:hover{
+    background-color: #634775;
+}
+
+.bg-primary{
+    background-color: #3dfb04 !important;
+    color:#5c49dc
+}
+
+.bg-secondary{
+    background-color: #5c49dc !important;
+}
+
+.btn-sm{
+    background-color: red;
+    color: #fff;
+    border-radius: 1px solid red;
+}
+
+.btn-sm:hover{
+    background-color: #ff4d4d;
+    color:#ffffff;
+    border-radius: 1px solid #ff4d4d;
+}
+
+.editar{
+    background-color: #634775;
+    color: #fff;
+    border-radius: 1px solid #634775;
+}
+
+.editar:hover{
+    background-color: #5c49dc;
+    color:#ffffff;
+    border-radius: 1px solid #5c49dc;
+}
+

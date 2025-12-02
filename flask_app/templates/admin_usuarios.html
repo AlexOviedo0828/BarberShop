@@ -23,6 +23,8 @@
       href="{{ url_for('static', filename='css/usuario.css') }}"
     />
 
+    <link rel="stylesheet" href="{{url_for('static', filename='css/logout.css')}}">
+
     <!-- SWEETALERT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
@@ -89,9 +91,9 @@
 
                 <td>
                   {% if u.rol == "admin" %}
-                  <span class="badge bg-danger px-3 py-2">Admin</span>
+                  <span class="badge bg-primary px-3 py-2">Admin</span>
                   {% else %}
-                  <span class="badge bg-primary px-3 py-2">Usuario</span>
+                  <span class="badge bg-secondary px-3 py-2">Usuario</span>
                   {% endif %}
                 </td>
 
@@ -100,14 +102,14 @@
                 <td>
                   <a
                     href="/admin/usuarios/editar/{{ u.id }}"
-                    class="btn btn-warning btn-sm me-2"
+                    class="btn btn-warning btn-sm me-2 editar"
                   >
                     <i class="bi bi-pencil"></i>
                   </a>
 
                   <button
                     onclick="confirmarEliminacion({{ u.id }})"
-                    class="btn btn-danger btn-sm"
+                    class="btn btn-warning btn-sm"
                   >
                     <i class="bi bi-trash"></i>
                   </button>

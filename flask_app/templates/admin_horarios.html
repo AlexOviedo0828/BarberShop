@@ -31,13 +31,13 @@
             </a>
 
         
-            <h2 class="section-title text-center flex-grow-1 m-0">
+            <h2 class="section-title text-center flex-grow-1 m-0" style="color: #3dfb04; text-shadow: 0 0 10px white; font-weight: bold; background-color: rgba(0, 0, 0, 0.8); padding: 10px 20px; border-radius: 10px;">
                 Gestión de Horarios
             </h2>
 
            
             <a href="/dashboard/admin" class="btn btn-outline-light ms-3">
-                Volver →
+                ← Volver
             </a>
         </div>
 
@@ -70,7 +70,7 @@
                                 <th>Día</th>
                                 <th>Inicio</th>
                                 <th>Fin</th>
-                                <th>Descanso</th>
+                                <th>Reservada</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -85,10 +85,10 @@
                                 <td>{{ h.hora_fin }}</td>
 
                                 <td>
-                                    {% if h.descanso_inicio and h.descanso_fin %}
-                                        {{ h.descanso_inicio }} - {{ h.descanso_fin }}
+                                    {% if h.reservado == 0 %}
+                                        <span class="badge bg-success px-3 py-2">No</span>
                                     {% else %}
-                                        —
+                                        <span class="badge bg-danger px-3 py-2">Sí</span>
                                     {% endif %}
                                 </td>
 
