@@ -53,40 +53,68 @@
       <div class="glass-card p-3 mb-4 d-flex align-items-center">
         <img
           src="{{ url_for('static', filename=peluquero.imagen.url) }}"
-          width="500"
-          height="500"
+          width="250"
+          height="250"
           class="rounded shadow-neon me-3"
         />
         <div>
           <h4 class="m-1">{{ peluquero.nombre }} {{ peluquero.apellido }}</h4>
-          <small>Semana: {{ semana.inicio }} → {{ semana.fin }}</small>
+          {#<small>Semana: {{ semana.inicio }} → {{ semana.fin }}</small>#}
+          
         </div>
       </div>
 
       <!-- CALENDARIO -->
       <div class="calendar-wrapper">
-        {% for d in semana.dias %}
-        <div class="day-column">
-          <h5 class="day-title">{{ d.dia }}</h5>
-          <p class="date-label">{{ d.fecha }}</p>
+        {% for d, f in zip(dias, fechas) %}
+          <div class="day-column">
+            <h5 class="day-title">{{ d }}</h5>
+            <p class="date-label">{{ f }}</p>
 
-          {% for h in d.horas %} {% if h.ocupado %}
-          <div class="hour blocked">{{ h.hora }}</div>
-          {% else %}
-          <form method="post" action="/citas/agendar/procesar">
-            <input
-              type="hidden"
-              name="peluquero_id"
-              value="{{ peluquero.id }}"
-            />
-            <input type="hidden" name="fecha" value="{{ d.fecha }}" />
-            <input type="hidden" name="hora" value="{{ h.hora }}" />
-            <button class="hour available">{{ h.hora }}</button>
-          </form>
-          {% endif %} {% endfor %}
-        </div>
+            {% for h in semana[d] %} 
+              {% if h.reservado %}
+                <div class="hour blocked">
+                  {{ h.hora_inicio }} - {{ h.hora_fin }}
+                </div>
+              {% else %}
+                <form method="post" action="/citas/agendar/procesar">
+                  <input type="hidden" name="peluquero_id" value="{{ peluquero.id }}">
+                  <input type="hidden" name="fecha" value="{{ h.fecha }}">
+                  <input type="hidden" name="hora_inicio" value="{{ h.hora_inicio }}">
+                  <input type="hidden" name="hora_fin" value="{{ h.hora_fin }}">
+                  <input type="hidden" name="horario_id" value="{{ h.id }}">
+                  <button class="hour available">{{ h.hora_inicio }} - {{ h.hora_fin }}</button>
+                </form>
+              {% endif %}
+            {% endfor %}
+
+          </div>
         {% endfor %}
       </div>
+
+      {#<div class="calendar-wrapper">#}
+        {#{% for d in semana.dias %}#}
+        {#<div class="day-column">#}
+          {#<h5 class="day-title">{{ d.dia }}</h5>#}
+          {#<p class="date-label">{{ d.fecha }}</p>#}
+
+          {#{% for h in d.horas %} {% if h.ocupado %}#}
+          {#<div class="hour blocked">{{ h.hora }}</div>#}
+          {#{% else %}#}
+          {#<form method="post" action="/citas/agendar/procesar">#}
+            {#<input#}
+              {#type="hidden"#}
+              {#name="peluquero_id"#}
+              {#value="{{ peluquero.id }}"#}
+            {#/>#}
+            {#<input type="hidden" name="fecha" value="{{ d.fecha }}" />#}
+            {#<input type="hidden" name="hora" value="{{ h.hora }}" />#}
+            {#<button class="hour available">{{ h.hora }}</button>#}
+          {#</form>#}
+          {#{% endif %} {% endfor %}#}
+        {#</div>#}
+        {#{% endfor %}#}
+      {#</div>#}
 
       {% endif %}
     </div>

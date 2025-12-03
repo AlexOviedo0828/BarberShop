@@ -49,6 +49,18 @@ class HorarioBarbero:
                 horarios.append(cls(row))
         return horarios
 
+    @classmethod
+    def get_by_barbero_and_dia(cls, data):
+        query = """
+            SELECT * FROM horarios_barbero
+            WHERE barbero_id = %(barbero_id)s AND dia = %(dia)s;
+        """
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        horarios = []
+        if results:
+            for row in results:
+                horarios.append(cls(row))
+        return horarios
     # Obtener uno
     @classmethod
     def get_by_id(cls, data):
@@ -69,6 +81,24 @@ class HorarioBarbero:
                 hora_fin = %(hora_fin)s,
                 descanso_inicio = %(descanso_inicio)s,
                 descanso_fin = %(descanso_fin)s
+            WHERE id = %(id)s;
+        """
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    
+    @classmethod
+    def reservar(cls, data):
+        query = """
+            UPDATE horarios_barbero
+            SET reservado = 1
+            WHERE id = %(id)s;
+        """
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    
+    @classmethod
+    def liberar(cls, data):
+        query = """
+            UPDATE horarios_barbero
+            SET reservado = 0
             WHERE id = %(id)s;
         """
         return connectToMySQL(cls.db_name).query_db(query, data)

@@ -13,6 +13,7 @@ class Cita:
         self.estado = data["estado"]
         self.notas = data.get("notas")
         self.duracion_minutos = data.get("duracion_minutos", 30)
+        self.horario_id = data.get("horario_id", None)
 
     # ===============================================================
     #  Citas de hoy (para dashboard admin)
@@ -62,8 +63,8 @@ class Cita:
     @classmethod
     def crear(cls, data):
         query = """
-            INSERT INTO citas (usuario_id, peluquero_id, fecha, hora, estado, notas, duracion_minutos)
-            VALUES (%(usuario_id)s, %(peluquero_id)s, %(fecha)s, %(hora)s, %(estado)s, %(notas)s, %(duracion_minutos)s);
+            INSERT INTO citas (usuario_id, peluquero_id, fecha, hora, estado, notas, horario_id)
+            VALUES (%(usuario_id)s, %(peluquero_id)s, %(fecha)s, %(hora)s, %(estado)s, %(notas)s, %(horario_id)s);
         """
         return connectToMySQL(cls.db).query_db(query, data)
 
@@ -153,3 +154,11 @@ class Cita:
         """
         data = {"limite": limite}
         return connectToMySQL(cls.db).query_db(query, data)
+    
+    @classmethod
+    def obtener_por_id(cls, data):
+        query = "SELECT * FROM citas WHERE id = %(id)s;"
+        results = connectToMySQL(cls.db).query_db(query, data)
+        if results:
+            return cls(results[0])
+        return None
