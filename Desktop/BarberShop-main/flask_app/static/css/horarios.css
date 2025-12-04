@@ -1,0 +1,123 @@
+
+body {
+    background: url('/static/img/fondousu.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    color: #fff;
+}
+
+.btn-neon {
+    background: #7CFF7C;
+    color: #000;
+    font-weight: 700;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #7CFF7C;
+}
+
+.btn-neon:hover {
+    background: #9AFF9A;
+    box-shadow: 0 0 15px #7CFF7C;
+}
+
+
+.glass-card {
+    width: 95%;
+    max-width: 1200px;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 18px;
+    padding: 25px;
+    margin-top: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+.glass-subcard {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.glass-table thead tr {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.glass-table th {
+    color: #7CFF7C;
+    font-weight: 700;
+}
+
+.glass-table td {
+    color: #fff;
+}
+
+
+.modal-dialog {
+    max-width: 520px;
+}
+
+.glass-modal {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 0 25px rgba(124, 255, 124, 0.35);
+    color: #fff;
+}
+
+.glass-modal .modal-title {
+    color: #7CFF7C;
+    font-weight: 800;
+    text-shadow: 0 0 10px rgba(124, 255, 124, 0.9);
+}
+
+.glass-modal .form-control,
+.glass-modal .form-select {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+}
+
+.glass-modal .form-control:focus,
+.glass-modal .form-select:focus {
+    border-color: #7CFF7C;
+    box-shadow: 0 0 10px #7CFF7C;
+}
+
+.glass-modal .btn-success {
+    background: #7CFF7C;
+    color: #000;
+    font-weight: 700;
+    border-radius: 8px;
+}
+
+.glass-modal .btn-success:hover {
+    background: #9CFFA6;
+    box-shadow: 0 0 12px #7CFF7C;
+}
+
+.glass-modal .btn-secondary {
+    background: rgba(255,255,255,0.15);
+    border: none;
+}
+
+.glass-modal .btn-secondary:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+
+.glass-modal {
+    animation: modalFadeIn 0.25s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}

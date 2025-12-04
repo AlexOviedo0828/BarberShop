@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Peluquero | BarberShop</title>
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- ICONOS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS GENERAL -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/usuario.css') }}">
+</head>
+
+<body>
+    <main class="contenido">
+        <div class="glass-header d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0">
+                <i class="bi bi-pencil-square"></i> Editar Peluquero
+            </h2>
+
+            <a href="/admin/peluqueros" class="btn btn-outline-light">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
+        </div>
+        <div class="glass-panel p-4">
+
+            <form action="/admin/peluqueros/actualizar/{{ peluquero.id }}"
+                  method="POST" enctype="multipart/form-data">
+
+                <div class="row">
+
+                    <!-- Nombre -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-white">Nombre</label>
+                        <input type="text" name="nombre" value="{{ peluquero.nombre }}"
+                               class="form-control glass-input" required>
+                    </div>
+
+                    <!-- Apellido -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-white">Apellido</label>
+                        <input type="text" name="apellido" value="{{ peluquero.apellido }}"
+                               class="form-control glass-input" required>
+                    </div>
+
+                    <!-- Teléfono -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-white">Teléfono</label>
+                        <input type="text" name="telefono" value="{{ peluquero.telefono }}"
+                               class="form-control glass-input">
+                    </div>
+
+                    <!-- Especialidad -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-white">Especialidad</label>
+                        <select name="especialidad" class="form-select glass-input">
+                            <option value="">--</option>
+                            <option value="corte" {% if peluquero.especialidad=='corte' %}selected{% endif %}>Corte</option>
+                            <option value="barba" {% if peluquero.especialidad=='barba' %}selected{% endif %}>Barba</option>
+                            <option value="tintura" {% if peluquero.especialidad=='tintura' %}selected{% endif %}>Tintura</option>
+                        </select>
+                    </div>
+
+                    <!-- FOTO ACTUAL -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-white">Foto actual</label><br>
+
+                        {% if peluquero.imagen %}
+                            <img src="{{ url_for('static', filename=peluquero.imagen['url']) }}"
+                                 id="current-img"
+                                 class="rounded border glass-img"
+                                 style="width:100%;max-width:450px;height:450px;object-fit:cover;">
+                        {% else %}
+                            <p class="text-white-50">Sin imagen</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- NUEVA FOTO -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-white">Cambiar foto</label>
+                        <input type="file" name="imagen" class="form-control glass-input"
+                               accept="image/*" onchange="preview(event)">
+                        <img id="preview-img"
+                             style="display:none;width:200px;height:200px;object-fit:cover;margin-top:10px;"
+                             class="rounded border glass-img">
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-white">Disponible</label>
+                        <select name="disponible" class="form-select glass-input">
+                            <option value="1" {% if peluquero.disponible==1 %}selected{% endif %}>ON</option>
+                            <option value="0" {% if peluquero.disponible==0 %}selected{% endif %}>OFF</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button class="btn btn-success mt-3 px-4">
+                    <i class="bi bi-save"></i> Actualizar Peluquero
+                </button>
+
+            </form>
+        </div>
+
+    </main>
+
+<script>
+function preview(event) {
+    const img = document.getElementById("preview-img");
+    img.src = URL.createObjectURL(event.target.files[0]);
+    img.style.display = "block";
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+
+body {
+    background: url("/static/img/fondousu.jpg") no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    color: #f9f7f7;
+  }
+ 
+  
+  .top-navbar {
+    background: rgba(4, 4, 4, 0.45);
+    backdrop-filter: blur(12px);
+    padding: 12px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  
+  .top-navbar .nav-link {
+    color: #e8e9ea !important;
+    margin-right: 15px;
+    font-weight: 500;
+  }
+  
+  .top-navbar .nav-link.active,
+  .top-navbar .nav-link:hover {
+    color: #fff !important;
+    text-shadow: 0 0 6px #ff00ff;
+  }
+  h6{
+    color: #3dfb04;
+  }
+  
+  .contenido {
+    padding: 40px 50px;
+  }
+  h2{
+    color: #3dfb04;
+  }
+  p{
+    color: #f7db0e;
+    
+  }
+  
+  .glass-header {
+    background: rgba(6, 205, 240, 0.13);
+    backdrop-filter: blur(14px);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(17, 115, 244, 0.2);
+  }
+  
+  
+  .glass-card {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(15px);
+    padding: 25px;
+    border-radius: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    text-align: center;
+    transition: 0.25s;
+  }
+  
+  .glass-card:hover {
+    transform: translateY(-4px);
+    background: rgba(5, 5, 5, 0.18);
+  }
+  
+  
+  .quick-btn {
+    display: block;
+    padding: 25px;
+    border-radius: 18px;
+    background: rgba(2, 2, 2, 0.12);
+    backdrop-filter: blur(12px);
+    text-align: center;
+    color: #0a0a0a;
+    text-decoration: none;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    transition: 0.25s;
+  }
+  
+  .quick-btn:hover {
+    background: rgba(254, 1, 246, 0.2);
+    transform: translateY(-4px);
+  }
+  
+  .quick-btn i {
+    font-size: 38px;
+    margin-bottom: 8px;
+    color: #24ff02;
+  }
+  
+  
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(14px);
+    padding: 25px;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  a{
+    color: #f7db0e;
+  }
+  span{
+    color: #f7db0e;
+  }
+ 
+  table th,
+  table td {
+    background: transparent !important;
+  }

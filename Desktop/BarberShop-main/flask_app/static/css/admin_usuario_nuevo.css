@@ -1,0 +1,90 @@
+
+body {
+    background: url('/static/img/fondousu.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    color: #f7f3f3;
+}
+.admin-nav {
+
+    backdrop-filter: blur(10px);
+    padding: 12px 25px;
+    display: flex;
+}
+.glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    border-radius: 18px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+
+    color: #fff;
+}
+
+
+label {
+    color: #dcdcdc;
+    font-weight: 500;
+}
+
+.form-control,
+.form-select {
+    background: rgba(0, 0, 0, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.20) !important;
+    color: #fff !important;
+    border-radius: 10px;
+    transition: 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: rgba(0, 0, 0, 0.45) !important;
+    border-color: #8ef57a !important;
+    box-shadow: 0 0 12px rgba(142, 245, 122, 0.55) !important;
+}
+
+
+.btn-success {
+    background-color: #8ef57a !important;
+    border-color: #8ef57a !important;
+    color: #000 !important;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: 0.2s ease;
+}
+
+.btn-success:hover {
+    filter: brightness(1.15);
+}
+
+.btn-outline-secondary {
+    border-color: #ccc !important;
+    color: #eee !important;
+    border-radius: 10px;
+    display: flex;
+   
+}
+
+.btn-outline-secondary:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+
+@media (max-width: 768px) {
+    .admin-nav {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .admin-nav h2 {
+        order: -1;
+        margin-bottom: 10px;
+    }
+
+    .glass-card {
+        padding: 20px;
+    }
+}

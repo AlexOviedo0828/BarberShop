@@ -1,0 +1,116 @@
+/* ==============================
+   FONDO GENERAL
+==============================*/
+body {
+    background: url('../img/fondousu.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+}
+
+.top-navbar {
+    background: rgba(0,0,0,0.45);
+    padding: 15px 25px;
+    backdrop-filter: blur(10px);
+}
+.btn-neon {
+    background: #00ff88;
+    color: #000;
+    border: none;
+    font-weight: bold;
+    box-shadow: 0 0 10px #00ff88;
+}
+.btn-neon:hover {
+    background: #00cc6a;
+    box-shadow: 0 0 15px #00ff88;
+}
+
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: white;
+}
+
+
+.shadow-neon {
+    border: 2px solid #00ff88;
+    box-shadow: 0 0 12px #00ff88;
+}
+
+.cita small,
+.cita-info small,
+.cita-card small {
+    color: #ffffff !important;
+    text-shadow: 0 0 6px #00ff88,
+                 0 0 12px #00ff88,
+                 0 0 18px #00ff88;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+
+.calendar-wrapper {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    width: 3000px;
+}
+
+.day-column {
+    min-width: 200px;
+    background: rgba(0,0,0,0.45);
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.day-title {
+    color: #00ff88;
+    text-shadow: 0 0 6px #00ff88;
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
+}
+
+.date-label {
+    text-align: center;
+    margin-bottom: 10px;
+    opacity: .85;
+    font-size: 14px;
+}
+
+
+.hour {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.available {
+    background: rgba(0,255,136,0.25);
+    border: 1px solid #00ff88;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.available:hover {
+    background: #00ff88;
+    color: #000;
+}
+
+
+.blocked {
+    background: rgba(255,0,0,0.35);
+    border: 1px solid red;
+    color: #ffbcbc;
+    cursor: not-allowed;
+    font-weight: 500;
+}

@@ -1,0 +1,307 @@
+body {
+    background: url('/static/img/neon-barber.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(12, 11, 11);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* ============================
+   NAV BAR ADMIN
+============================ */
+
+.admin-nav {
+    position: fixed;
+    top: 0;
+    left: 1500px;
+    width: 100%;
+    backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.45);
+    padding: 12px 25px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 999;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-nav .left .logo {
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 15px;
+    color: #fff;
+}
+
+.admin-nav .nav-link {
+    margin-right: 15px;
+    color: #ccc;
+    text-decoration: none;
+}
+
+.admin-nav .nav-link:hover,
+.admin-nav .nav-link.active {
+    color: #15fa05;
+}
+
+/* ============================
+   CARDS — DASHBOARD
+============================ */
+
+.dashboard-stat-card {
+    background: #000 !important;
+    border-radius: 20px;
+    padding: 25px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+    color: #fefafa !important;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.dashboard-stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.75);
+}
+
+.stat-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e6e6e6 !important;
+}
+
+.stat-value {
+    font-size: 2.6rem;
+    font-weight: 900;
+    color: white !important;
+}
+
+/* ============================
+   GLASS CARD
+============================ */
+
+.glass-card {
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 16px;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f8f5f5;
+    padding: 20px;
+}
+
+.glass-subcard {
+    background: rgba(251, 249, 249, 0.08);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+/* ============================
+   TITULOS
+============================ */
+
+.section-title,
+.card-title,
+h2,
+h3,
+h4 {
+    color: #2bf907 !important;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+.cascade-title,
+h3 {
+    color: #2bf907 !important;
+    font-weight: bold;
+}
+
+/* ============================
+   TABLAS
+============================ */
+
+.glass-table {
+    background: rgba(0, 0, 0, 0.2) !important;
+}
+
+.table-dark th {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: #bbb !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.table-dark td {
+    background: rgba(255, 255, 255, 0.03) !important;
+    color: #f3f3f3 !important;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.table-hover tbody tr:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.table img {
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ============================
+   MODALES
+============================ */
+
+.glass-modal {
+    backdrop-filter: blur(18px) !important;
+    background: rgba(40, 40, 40, 0.5) !important;
+    color: rgb(252, 248, 248) !important;
+}
+
+.glass-modal .modal-header,
+.glass-modal .modal-footer {
+    border: none !important;
+}
+
+.glass-modal select,
+.glass-modal input {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ============================
+   INPUTS / FORMULARIOS
+============================ */
+
+input.form-control,
+select.form-select,
+textarea.form-control {
+    background: rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
+}
+
+input.form-control:focus,
+select.form-select:focus {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: #00c3ff !important;
+    color: white;
+    box-shadow: none !important;
+}
+
+/* ============================
+   BOTONES
+============================ */
+
+.btn {
+    border-radius: 10px !important;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: #008cff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #0a7fe6;
+}
+
+.btn-success {
+    background: #18c964;
+    border: none;
+}
+
+.btn-success:hover {
+    background: #0db157;
+}
+
+.btn-danger {
+    background: #e5484d;
+    border: none;
+}
+
+.btn-danger:hover {
+    background: #d33b40;
+}
+
+.btn-warning {
+    background: #f5a524;
+    border: none;
+}
+
+.btn-warning:hover {
+    background: #e69716;
+}
+
+.btn-volver-pro {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 10px;
+    transition: 0.2s ease-in-out;
+}
+
+.btn-volver-pro:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.btn-nuevo-pro {
+    background: #15d37f;
+    border: none;
+    color: #fff !important;
+    padding: 8px 18px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.btn-nuevo-pro:hover {
+    background: #10b56a;
+    transform: scale(1.05);
+}
+
+.shadow-soft {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================
+   FORM EDITAR PRODUCTO
+============================ */
+
+.form-card {
+    background: #111;
+    border-radius: 16px;
+    padding: 25px;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.6);
+}
+
+.form-label {
+    color: #d4ffd9;
+    font-weight: 600;
+}
+
+.form-control,
+.form-select {
+    background: #1a1a1a !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
+    color: rgb(14, 14, 14) !important;
+    border-radius: 10px !important;
+    padding: 10px 14px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: #222 !important;
+    border-color: #15fa05 !important;
+    box-shadow: 0 0 10px rgba(21,250,5,0.4) !important;
+}
+
+textarea.form-control {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.text-info {
+    color: #15fa05 !important;
+    opacity: 0.85;
+}
