@@ -1,0 +1,26 @@
+body.bg-barber {
+    background: url('../img/fondousu.jpg') center/cover no-repeat fixed;
+}
+
+.title-neon {
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+    font-weight: bold;
+}
+
+.glass-card {
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+}
+
+.btn-neon {
+    background: #8b5cf6;
+    color: white;
+    transition: 0.2s;
+}
+
+.btn-neon:hover {
+    background: #a78bfa;
+    transform: scale(1.05);
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pedido PDF</title>
+
+    <!-- CSS  para PDF -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/pedido_pdf.css') }}"
+    />
+  </head>
+
+  <body>
+    <!-- ENCABEZADO -->
+    <div class="header">
+      <h1>Resumen del Pedido</h1>
+      <div class="sub-info">
+        Pedido <strong>#{{ pedido.id }}</strong>
+        <br />
+        Fecha: {{ pedido.fecha }}
+        <br />
+        Estado:
+        <span class="status status-{{ pedido.estado }}">
+          {{ pedido.estado.capitalize() }}
+        </span>
+      </div>
+    </div>
+
+    <!-- TABLA DETALLES -->
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for d in detalles %}
+        <tr>
+          <td>{{ d.producto_nombre }}</td>
+          <td>{{ d.cantidad }}</td>
+          <td>$ {{ "%.2f"|format(d.precio) }}</td>
+          <td>$ {{ "%.2f"|format(d.precio * d.cantidad) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- TOTAL -->
+    <div class="total-box">
+      <h2>
+        Total del pedido:
+        <span class="total-num">$ {{ "%.2f"|format(pedido.total) }}</span>
+      </h2>
+    </div>
+  </body>
+</html>

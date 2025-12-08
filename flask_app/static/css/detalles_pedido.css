@@ -1,0 +1,107 @@
+
+.bg-barber {
+    background: url('../img/neon-barber.jpg') center/cover fixed no-repeat;
+    min-height: 100vh;
+}
+
+.bg-barber::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(6px);
+    z-index: -1;
+}
+
+
+.title-neon {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #00e676;
+    text-shadow: 0 0 10px #00e676;
+}
+
+
+.text-neon {
+    color: #00e676;
+}
+
+
+.btn-neon {
+    background: #00e676;
+    border: none;
+    color: #000;
+    font-weight: 700;
+    border-radius: 10px;
+}
+
+.btn-neon:hover {
+    background: #00ff95;
+    color: #000;
+}
+
+.btn-volver {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.btn-volver:hover {
+    background: #00e676;
+    color: #000;
+}
+
+/* Card compra exitosa */
+.card-exito {
+    max-width: 700px;
+    width: 100%;
+    background: rgba(0,0,0,0.85);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 30px;
+    color: white;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+}
+
+.icon-exito {
+    font-size: 3rem;
+    color: #00e676;
+}
+
+/* Tabla detalles */
+.tabla-detalles {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: rgba(255,255,255,0.03);
+}
+
+.tabla-detalles th,
+.tabla-detalles td {
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 10px;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.tabla-detalles th {
+    background: rgba(255,255,255,0.12);
+}
+
+/* Cards de pedidos */
+.pedido-card {
+    background: rgba(0,0,0,0.8);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+}
+
+/* Card detalle */
+.pedido-detalle-card {
+    background: rgba(0,0,0,0.82);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+}
