@@ -153,3 +153,31 @@ def admin_pedido_detalle(id):
         pedido=pedido,
         detalles=detalles_completos
     )
+
+    @app.post("/admin/pedidos/estado/<int:id>")
+    def admin_cambiar_estado(id):
+        if not is_admin():
+            return jsonify({"error": "No autorizado"}), 403
+
+            nuevo_estado = request.json.get("estado")
+            Pedido.cambiar_estado({"id": id, "estado": nuevo_estado})
+
+            return jsonify({"success": True, "estado": nuevo_estado})
+
+    @app.route('/admin/pedidos/estado/<int:id>', methods=['POST'])
+    def actualizar_estado_pedido(id):
+        if not is_admin():
+            return {"error": "No autorizado"}, 403
+
+        data = request.get_json()
+        nuevo_estado = data.get("estado")
+
+        if not nuevo_estado:
+            return {"error": "Estado no proporcionado"}, 400
+
+        Pedido.actualizar_estado({
+            "id": id,
+            "estado": nuevo_estado
+        })
+
+    return {"mensaje": "Estado actualizado correctamente"}

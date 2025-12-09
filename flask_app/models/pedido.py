@@ -136,3 +136,17 @@ class Pedido:
         """
         resultado = connectToMySQL(cls.db).query_db(query, data)
         return resultado[0] if resultado else None
+
+    @classmethod
+    def cambiar_estado(cls, data):
+        query = "UPDATE pedidos SET estado = %(estado)s WHERE id = %(id)s;"
+        return connectToMySQL(cls.db).query_db(query, data)
+
+    @classmethod
+    def actualizar_estado(cls, data):
+        query = """
+        UPDATE pedidos 
+        SET estado = %(estado)s
+        WHERE id = %(id)s;
+        """
+        return connectToMySQL(cls.db).query_db(query, data)
