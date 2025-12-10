@@ -1,33 +1,40 @@
-<!-- TARJETAS DE ESTADÍSTICAS -->
-      <div class="row g-4 mb-4">
-        <div class="col-md-4">
-          <div class="glass-card stat-card">
-            <h6 class="text-yellow-50">Citas pendientes</h6>
-            <h1>{{ citas_pendientes }}</h1>
-          </div>
+    <section class="mt-4 mb-5">
+        <div class="row g-3 mb-5">
+
+        <div class="col-md-2">
+          <a href="/admin/usuarios" class="quick-btn">
+            <i class="bi bi-people fs-1"></i>
+            <h6 class="mt-2 fw-bold">Usuarios</h6>
+          </a>
         </div>
 
-        <div class="col-md-4">
-          <div class="glass-card stat-card">
-            <h6 class="text-yellow-50">Próxima cita</h6>
-
-            {% if proxima_cita %}
-            <p class="fw-bold big">
-              {{ proxima_cita.fecha }} - {{ proxima_cita.hora }}
-            </p>
-            <span class="text-yellow-50"
-              >Con {{ proxima_cita.peluquero_nombre }}</span
-            >
-            {% else %}
-            <h1>—</h1>
-            {% endif %}
-          </div>
+        <div class="col-md-2">
+          <a href="/admin/peluqueros" class="quick-btn">
+            <i class="bi bi-scissors fs-1"></i>
+            <h6 class="mt-2 fw-bold">Peluqueros</h6>
+          </a>
         </div>
 
-        <div class="col-md-4">
-          <div class="glass-card stat-card">
-            <h6 class="text-yellow-50">Pedidos en curso</h6>
-            <h1>{{ pedidos_en_curso }}</h1>
-            <!-- YA ES UN NÚMERO -->
-          </div>
+        <div class="col-md-2">
+          <a href="/admin/horarios" class="quick-btn">
+            <i class="bi bi-clipboard2 fs-1"></i>
+            <h6 class="mt-2 fw-bold">Horarios</h6>
+          </a>
         </div>
+
+        <div class="col-md-2">
+          <a href="/admin/productos" class="quick-btn">
+            <i class="bi bi-box-seam fs-1"></i>
+            <h6 class="mt-2 fw-bold">Productos</h6>
+          </a>
+        </div>
+
+        <div class="col-md-2">
+          <a href="/admin/pedidos" class="quick-btn">
+            <i class="bi bi-cart-check fs-1"></i>
+            <h6 class="mt-2 fw-bold">Pedidos</h6>
+          </a>
+        </div>
+
+      </div>
+      </section>
