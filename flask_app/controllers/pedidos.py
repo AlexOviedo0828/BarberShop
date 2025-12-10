@@ -6,7 +6,7 @@ from flask_app.models.producto import Producto
 
 import pdfkit
 
-path_wkhtmltopdf = "/usr/local/bin/wkhtmltopdf"
+path_wkhtmltopdf = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
 
 config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
 

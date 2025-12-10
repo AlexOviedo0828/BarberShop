@@ -9,6 +9,7 @@ bcrypt = "*"
 flask-bcrypt = "*"
 apscheduler = "*"
 flask = "*"
+pdfkit = "*"
 
 [dev-packages]
 
