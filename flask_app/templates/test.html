@@ -1,0 +1,33 @@
+<!-- TARJETAS DE ESTADÍSTICAS -->
+      <div class="row g-4 mb-4">
+        <div class="col-md-4">
+          <div class="glass-card stat-card">
+            <h6 class="text-yellow-50">Citas pendientes</h6>
+            <h1>{{ citas_pendientes }}</h1>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="glass-card stat-card">
+            <h6 class="text-yellow-50">Próxima cita</h6>
+
+            {% if proxima_cita %}
+            <p class="fw-bold big">
+              {{ proxima_cita.fecha }} - {{ proxima_cita.hora }}
+            </p>
+            <span class="text-yellow-50"
+              >Con {{ proxima_cita.peluquero_nombre }}</span
+            >
+            {% else %}
+            <h1>—</h1>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="glass-card stat-card">
+            <h6 class="text-yellow-50">Pedidos en curso</h6>
+            <h1>{{ pedidos_en_curso }}</h1>
+            <!-- YA ES UN NÚMERO -->
+          </div>
+        </div>
