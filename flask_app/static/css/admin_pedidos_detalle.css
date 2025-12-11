@@ -1,0 +1,55 @@
+body.bg-barber {
+    background: url('../img/fondousu.jpg') no-repeat center center/cover;
+    min-height: 100vh;
+    color: #050505;
+}
+
+.title-neon {
+    color: #00ff88;
+    text-shadow: 0 0 10px #00ff88;
+    font-weight: bold;
+}
+
+.glass-card {
+    background: rgba(0,0,0,0.55);
+    border-radius: 10px;
+    padding: 20px;
+    backdrop-filter: blur(6px);
+    color: white;
+}
+
+table {
+    width: 100%;
+    color: #fff;
+}
+
+table th {
+    background: rgba(255,255,255,0.1);
+    color: #00ff88;
+    padding: 12px;
+    text-transform: uppercase;
+}
+
+table td {
+    background: rgba(255,255,255,0.05);
+    padding: 12px;
+}
+
+.img-producto {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #00ff88;
+}
+
+.btn-volver {
+    background: #333;
+    color: #595959;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+
+.btn-volver:hover {
+    background: #444;
+}

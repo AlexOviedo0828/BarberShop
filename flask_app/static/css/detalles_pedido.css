@@ -1,0 +1,127 @@
+/* ================================
+   FONDO GENERAL
+================================ */
+body.bg-barber {
+    background: url('../img/fondousu.jpg') center/cover no-repeat fixed;
+    min-height: 100vh;
+}
+
+/* ================================
+   TITULOS NEÓN
+================================ */
+.title-neon {
+    color: #00ffcc;
+    text-shadow: 0 0 8px #00ffcc, 0 0 16px #00ffcc;
+    font-weight: bold;
+}
+
+/* ================================
+   TARJETA PRINCIPAL GLASS
+================================ */
+.glass-card {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(12px);
+    border-radius: 14px;
+    padding: 20px;
+    color: white;
+}
+
+/* ================================
+   BOTÓN VOLVER
+================================ */
+.btn-volver {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+    color: white;
+    transition: 0.2s ease-in-out;
+}
+
+.btn-volver:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: black;
+}
+
+/* ================================
+   BOTÓN PDF
+================================ */
+.btn-neon {
+    background: #00e6a8;
+    color: black;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: 0.2s ease-in-out;
+}
+
+.btn-neon:hover {
+    background: #00ffbf;
+    transform: scale(1.04);
+}
+
+/* ================================
+   TABLA DE PRODUCTOS
+================================ */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ================================
+   IMAGEN DEL PRODUCTO
+================================ */
+.img-thumbnail {
+    border-radius: 8px;
+    border: 1px solid #666;
+}
+
+/* ================================
+   TEXTO NEÓN
+================================ */
+.text-neon {
+    color: #00ffcc !important;
+    text-shadow: 0 0 8px #00ffcc;
+}
+
+/* ================================
+   BADGES DE ESTADO
+================================ */
+.badge.bg-warning {
+    background-color: #f1c40f !important;
+    color: #000 !important;
+}
+
+.badge.bg-info {
+    background-color: #0dcaf0 !important;
+    color: #000 !important;
+}
+
+.badge.bg-success {
+    background-color: #28a745 !important;
+    color: #fff !important;
+}
+
+.badge.bg-secondary {
+    background-color: #6c757d !important;
+}
+
+/* ================================
+   TARJETA INFORMACIÓN DEL PEDIDO
+================================ */
+.pedido-detalle-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+}
+
+.pedido-detalle-card p {
+    margin: 6px 0;
+    font-size: 1rem;
+}

@@ -1,0 +1,73 @@
+body.bg-barber {
+    background: url('../img/fondousu.jpg') center/cover no-repeat fixed;
+}
+
+.title-neon {
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+    font-weight: bold;
+}
+
+.glass-card {
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+}
+
+.btn-neon {
+    background: #8b5cf6;
+    color: white;
+    transition: 0.2s;
+}
+
+.btn-neon:hover {
+    background: #a78bfa;
+    transform: scale(1.05);
+}
+.estado-select {
+    font-weight: bold;
+    width:550px;
+  }
+  
+  .estado-select option[value="pendiente"] { color: #ffc107; }
+  .estado-select option[value="encamino"] { color: #0dcaf0; }
+  .estado-select option[value="entregado"] { color: #28a745; }
+  
+  
+  
+  
+  .glass-card {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+  }
+  
+.title-neon {
+    color: #00ff9f;
+    font-weight: bold;
+    text-shadow: 0 0 8px #00ff9f;
+  }
+/* Estilo base */
+.estado-select {
+    padding: 5px;
+    border-radius: 6px;
+    font-weight: bold;
+    border: 2px solid #555;
+    color: white;
+}
+
+/* Colores del select */
+.estado-pendiente {
+    background: #ffc107;
+    color: #000;
+}
+
+.estado-encamino {
+    background: #0dcaf0;
+    color: #000;
+}
+
+.estado-entregado {
+    background: #28a745;
+    color: #fff;
+}

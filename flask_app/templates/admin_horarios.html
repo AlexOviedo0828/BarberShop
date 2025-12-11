@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Horarios | BarberShop Admin</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/usuario.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/logout.css') }}"
+    />
+    
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/horarios.css') }}"
+    />
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+
+  <body>
+    <main class="contenido">
+      <div
+        class="glass-header d-flex justify-content-between align-items-center"
+      >
+        <h2 class="fw-bold mb-0">
+          <i class="bi bi-clipboard2"></i> Gestión de Horarios
+        </h2>
+        <div>
+          <button
+            class="btn btn-success me-2"
+            data-bs-toggle="modal"
+            data-bs-target="#modalCrear"
+          >
+            <i class="bi bi-clipboard2-plus"></i> Nuevo Horario
+          </button>
+
+          <a href="/dashboard/admin" class="btn btn-outline-light">
+            <i class="bi bi-arrow-left"></i> Volver
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, msg in messages %}
+        <div
+          class="alert alert-{{ 'danger' if category=='horario' else category }} alert-dismissible fade show"
+        >
+          {{ msg }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+          ></button>
+        </div>
+        {% endfor %} {% endif %} {% endwith %}
+      </div>
+
+      <section class="glass-panel mt-4">
+        <h4 class="text-white mb-3">Listado de Horarios</h4>
+
+        <div class="table-responsive">
+          <table class="table table-dark table-hover align-middle text-center">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Barbero</th>
+                <th>Día</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Reservada</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for h in horarios %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ h.barbero_nombre }}</td>
+                <td class="text-capitalize">{{ h.dia }}</td>
+                <td>{{ h.hora_inicio }}</td>
+                <td>{{ h.hora_fin }}</td>
+
+                <td>
+                  {% if h.reservado == 0 %}
+                  <span class="badge bg-success px-3 py-2">No</span>
+                  {% else %}
+                  <span class="badge bg-danger px-3 py-2">Sí</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  <button
+                    class="btn btn-warning btn-sm me-2 editar"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalEditar{{ h.id }}"
+                  >
+                    <i class="bi bi-pencil"></i>
+                  </button>
+
+                  <button
+                    onclick="confirmarEliminacion({{ h.id }})"
+                    class="btn btn-danger btn-sm"
+                  >
+                    <i class="bi bi-trash"></i>
+                  </button>
+
+                  <form
+                    id="delete-form-{{ h.id }}"
+                    action="/admin/horarios/eliminar/{{ h.id }}"
+                    method="POST"
+                  ></form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    {% for h in horarios %}
+    <div class="modal fade" id="modalEditar{{ h.id }}" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-modal">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Horario</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <form action="{{ url_for('actualizar_horario', id=h.id) }}" method="POST">
+            <div class="modal-body">
+              <label class="form-label">Barbero</label>
+              <select name="barbero_id" class="form-select mb-3" required>
+                {% for b in barberos %}
+                <option
+                  value="{{ b.id }}"
+                  {%
+                  if
+                  b.id
+                  ==
+                  h.barbero_id
+                  %}selected{%
+                  endif
+                  %}
+                >
+                  {{ b.nombre }} {{ b.apellido }}
+                </option>
+                {% endfor %}
+              </select>
+
+              <label class="form-label">Día</label>
+              <select name="dia" class="form-select mb-3" required>
+                {% for d in ['lunes','martes','miercoles','jueves','viernes','sabado'] %}
+                <option value="{{ d }}" {% if h.dia == d %}selected{% endif %}>
+                  {{ d|capitalize }}
+                </option>
+                {% endfor %}
+              </select>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Inicio</label>
+                  <input
+                    type="time"
+                    name="hora_inicio"
+                    class="form-control"
+                    value="{{ h.hora_inicio }}"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Fin</label>
+                  <input
+                    type="time"
+                    name="hora_fin"
+                    class="form-control"
+                    value="{{ h.hora_fin }}"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <label class="form-label">Descanso inicio</label>
+                  <input
+                    type="time"
+                    name="descanso_inicio"
+                    class="form-control"
+                    value="{{ h.descanso_inicio or '' }}"
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Descanso fin</label>
+                  <input
+                    type="time"
+                    name="descanso_fin"
+                    class="form-control"
+                    value="{{ h.descanso_fin or '' }}"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancelar
+              </button>
+              <button class="btn btn-success">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <div class="modal fade" id="modalCrear">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-modal">
+          <div class="modal-header">
+            <h5 class="modal-title">Crear Horario</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <form action="{{ url_for('crear_horario') }}" method="POST">
+            <div class="modal-body">
+              <label class="form-label">Barbero</label>
+              <select name="barbero_id" class="form-select mb-3" required>
+                {% for b in barberos %}
+                <option value="{{ b.id }}">
+                  {{ b.nombre }} {{ b.apellido }}
+                </option>
+                {% endfor %}
+              </select>
+
+              <label class="form-label">Día</label>
+              <select name="dia" class="form-select mb-3" required>
+                <option value="lunes" style="color: black">Lunes</option>
+                <option value="martes" style="color: black">Martes</option>
+                <option value="miercoles" style="color: black">Miércoles</option>
+                <option value="jueves" style="color: black">Jueves</option>
+                <option value="viernes" style="color: black">Viernes</option>
+                <option value="sabado" style="color: black">Sábado</option>
+              </select>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Inicio</label>
+                  <input
+                    type="time"
+                    name="hora_inicio"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Fin</label>
+                  <input
+                    type="time"
+                    name="hora_fin"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <label class="form-label">Descanso inicio</label>
+                  <input
+                    type="time"
+                    name="descanso_inicio"
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Descanso fin</label>
+                  <input
+                    type="time"
+                    name="descanso_fin"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancelar
+              </button>
+              <button class="btn btn-success">Crear</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      function confirmarEliminacion(id) {
+        Swal.fire({
+          title: "¿Eliminar horario?",
+          text: "Esta acción no se puede deshacer.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#3085d6",
+          confirmButtonText: "Eliminar",
+          cancelButtonText: "Cancelar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            document.getElementById("delete-form-" + id).submit();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

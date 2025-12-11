@@ -1,0 +1,98 @@
+
+
+   body.bg-barber {
+    background: url("/static/img/fondousu.jpg") center/cover no-repeat fixed;
+    backdrop-filter: blur(4px);
+}
+
+/* Título */
+.title-neon {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #00f2ff;
+    text-shadow: 0 0 8px #00f2ff, 0 0 15px #00aab3;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Botón Volver */
+.btn-volver {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #00f2ff;
+    padding: 8px 16px;
+    border-radius: 10px;
+    color: white;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.btn-volver:hover {
+    background: #00f2ff;
+    color: #000;
+}
+
+/*
+   TARJETAS (CARDS)
+ */
+
+.pedido-card {
+    padding: 18px;
+    border-radius: 18px;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    
+    background: rgba(20, 20, 35, 0.65);
+
+   
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover */
+.pedido-card:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+}
+
+/* Títulos dentro de cards */
+.pedido-card .card-title {
+    color: #00f2ff;
+    font-weight: 700;
+    text-shadow: 0 0 6px #00d0ff;
+}
+
+
+.badge {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+.badge.bg-warning {
+    background: #ffe066;
+    color: #000;
+}
+
+/* Botones */
+.btn-neon {
+    background: #00e6c3;
+    color: #000;
+    border-radius: 10px;
+    padding: 6px 14px;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.btn-neon:hover {
+    background: #00fce2;
+    transform: scale(1.07);
+}
+
+.btn-outline-light {
+    border-radius: 10px;
+    padding: 6px 14px;
+}
